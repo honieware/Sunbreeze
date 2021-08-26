@@ -60,7 +60,7 @@ txtb_spr_w = sprite_get_width(txtb_spr);
 txtb_spr_h = sprite_get_height(txtb_spr);
 
 // Draw the text bubble
-draw_sprite_ext(txtb_spr, txtb_img, textbox_x + text_x_offset[page], textbox_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 0.5);
+draw_sprite_ext(txtb_spr, txtb_img, textbox_x + text_x_offset[page], textbox_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 0.75);
 
 // Draw the actual text
 // String "arrays" start at 1. Stupid, I know

@@ -1,8 +1,11 @@
-camera	= camera_create();
-vm		= matrix_build_lookat(0, 0, -10, 0, 0, 0, 0, 1, 0);// View matrix.
-// globalWidth and globalHeight don't work right now, don't ask me why
-pm		= matrix_build_projection_ortho(320, 180, 1, 3200);
+// TODO: Add pixel perfect scaling
+view_width = 1920/6;
+view_height = 1080/6;
 
-viewx	= 0;
-viewy	= 0;
-target	= obj_player;
+window_scale = 3;
+
+window_set_size(view_width * window_scale, view_height * window_scale);
+// This has to happen one step after the size is set.
+alarm[0] = 1;
+
+surface_resize(application_surface, view_width * window_scale, view_height * window_scale);

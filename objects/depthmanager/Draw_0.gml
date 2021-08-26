@@ -18,7 +18,6 @@ ds_grid_sort(dgrid, 1, true)
 // Loop through the grid and draw all the instances
 var inst;
 yy = 0; repeat(inst_num) {
-	show_debug_message("ID: " + string(dgrid[# 0, yy]) + " | Posicion (eje Y): " + string( dgrid[# 1, yy]));
 	// Pull out an ID
 	inst = dgrid[# 0, yy];
 	// Get instance to draw itself

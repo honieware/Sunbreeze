@@ -1,13 +1,16 @@
-/// @description Follow the player character
+#macro view view_camera[0] // Shortcut.
+camera_set_view_size(view, view_width, view_height);
 
-if (instance_exists(target)) {
-	//viewx	= target.x;
-	//viewy	= target.y;
-	if (global.lockXCamera) { viewx = 320 / 2; }
-	else { viewx	= lerp(viewx, target.x, 0.15); }
-	if (global.lockYCamera) { viewy = 180 / 2; }
-	else { viewy	= lerp(viewy, target.y, 0.15); }
+if (instance_exists(obj_player))
+{
+	var _x = clamp(obj_player.x - view_width / 2, 0, room_width - view_width);
+	var _y = clamp(obj_player.y - view_height / 2, 0, room_height - view_height);
 	
-	vm		= matrix_build_lookat(viewx, viewy, -10, viewx, viewy, 0, 0, 1, 0);
-	camera_set_view_mat(camera, vm);
+	var _cur_x = camera_get_view_x(view);
+	var _cur_y = camera_get_view_y(view);
+	
+	var _spd = .1;
+	camera_set_view_pos(view,
+						lerp(_cur_x, _x, _spd),
+						lerp(_cur_y, _y, _spd));
 }
