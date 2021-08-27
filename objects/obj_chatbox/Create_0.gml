@@ -25,4 +25,8 @@ option_link_id[0] = -1; // To check for the link after replying to the option
 option_pos = 0; // For scrolling through positions
 option_number = 0;
 
+// Name box
+nmeb_width = 47;
+nmeb_height = 18;
+
 setup = false;

@@ -125,6 +125,16 @@ if draw_char == text_length[page] && page == page_number - 1 {
 	}
 }
 
+// Draw the namebox bubble
+/*
+nmeb_spr = spr_namebox;
+nmeb_spr_w = sprite_get_width(nmeb_spr);
+nmeb_spr_h = sprite_get_height(nmeb_spr);
+show_debug_message(nmeb_spr_w);
+show_debug_message(nmeb_spr_h);
+draw_sprite_ext(nmeb_spr, txtb_img, _txtb_x, _txtb_y - 12, nmeb_width / nmeb_spr_w, nmeb_height / nmeb_spr_h, 0, c_red, 1);
+*/
+
 // Draw the actual text
 // String "arrays" start at 1. Stupid, I know
 var _drawtext = string_copy(text[page], 1, draw_char);
