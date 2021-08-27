@@ -1,5 +1,8 @@
 {
-  "spriteId": null,
+  "spriteId": {
+    "name": "spr_depth",
+    "path": "sprites/spr_depth/spr_depth.yy",
+  },
   "solid": false,
   "visible": true,
   "spriteMaskId": null,
@@ -29,7 +32,7 @@
     "path": "folders/Objects/codeobjs.yy",
   },
   "resourceVersion": "1.0",
-  "name": "depthmanager",
+  "name": "obj_depthmanager",
   "tags": [],
   "resourceType": "GMObject",
 }

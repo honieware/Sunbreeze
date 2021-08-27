@@ -12,12 +12,17 @@ txtb_img_spd = 0;
 
 // Text related variables
 page = 0; // Text page :)
-text[0] = "This is just some example text to see how well this wraps.";
-text[1] = "WHEN THE EXAMPLE IS TEXT!";
-text[2] = "Epic gamers commiting acts of epic Gaming.";
-text[3] = "Ten years ago a crack commando unit was sent to prison by a military court for a crime they didn't commit. These men promptly escaped from a maximum security stockade to the Los Angeles underground. Today, still wanted by the government, they survive as soldiers of fortune. If you have a problem and no one else can help, and if you can find them, maybe you can hire the A-team.";
+page_number = 0;
+text[0] = "";
 text_length[0] = string_length(text[0]);
 draw_char = 0; // How many of the characters are currently being drawn
 text_spd = 1;
+draw_set_color($5b7481);
+
+// Options
+option[0] = "";
+option_link_id[0] = -1; // To check for the link after replying to the option
+option_pos = 0; // For scrolling through positions
+option_number = 0;
 
 setup = false;

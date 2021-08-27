@@ -1,5 +1,8 @@
 {
-  "spriteId": null,
+  "spriteId": {
+    "name": "spr_chat",
+    "path": "sprites/spr_chat/spr_chat.yy",
+  },
   "solid": false,
   "visible": true,
   "spriteMaskId": null,
