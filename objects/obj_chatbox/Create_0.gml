@@ -40,7 +40,7 @@ name_textbox_color = $000000;
 setup = false;
 
 // Sound
-snd_delay = 4;
+snd_delay = 6;
 snd_count = snd_delay;
 
 // Effects
