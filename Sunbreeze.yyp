@@ -44,7 +44,7 @@
     {"id":{"name":"obj_camera","path":"objects/obj_camera/obj_camera.yy",},"order":0,},
     {"id":{"name":"spr_dal_wall","path":"sprites/spr_dal_wall/spr_dal_wall.yy",},"order":2,},
     {"id":{"name":"spr_planechair_double","path":"sprites/spr_planechair_double/spr_planechair_double.yy",},"order":8,},
-    {"id":{"name":"Sprite32","path":"sprites/Sprite32/Sprite32.yy",},"order":3,},
+    {"id":{"name":"spr_optionbox","path":"sprites/spr_optionbox/spr_optionbox.yy",},"order":3,},
     {"id":{"name":"spr_player_idle_right","path":"sprites/spr_player_idle_right/spr_player_idle_right.yy",},"order":2,},
     {"id":{"name":"spr_player_walk_down","path":"sprites/spr_player_walk_down/spr_player_walk_down.yy",},"order":0,},
     {"id":{"name":"obj_planechair_back_double","path":"objects/obj_planechair_back_double/obj_planechair_back_double.yy",},"order":7,},

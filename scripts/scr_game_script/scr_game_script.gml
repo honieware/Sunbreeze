@@ -23,8 +23,9 @@ function scr_game_script(_text_id){
 			
 		case "questions":
 			scr_text("Why is it dark when I go outside?")
-				scr_option("And why can't I look at the sun?", "questions - sun");
-				scr_option("Because the light goes away", "questions - lyrics");
+				scr_option("Yes!", "questions - sun");
+				scr_option("No.", "questions - lyrics");
+				scr_option("What?", "questions - lyrics");
 			break;
 			case "questions - sun":
 				scr_text("And how come when I look at the sun it hurts my eyes and it makes me blind?")
