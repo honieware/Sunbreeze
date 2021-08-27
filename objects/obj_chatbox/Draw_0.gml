@@ -66,6 +66,9 @@ txtb_img += txtb_img_spd;
 txtb_spr_w = sprite_get_width(txtb_spr);
 txtb_spr_h = sprite_get_height(txtb_spr);
 
+// Draw the text bubble
+draw_sprite_ext(txtb_spr, txtb_img, _txtb_x, _txtb_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 1);
+
 // ---------- Options ----------
 if draw_char == text_length[page] && page == page_number - 1 {
 	
@@ -101,9 +104,10 @@ if draw_char == text_length[page] && page == page_number - 1 {
 		
 	var _opt_spr_w = sprite_get_width(_opt_spr);
 	var _opt_spr_h = sprite_get_height(_opt_spr);
-		
-	draw_sprite_ext(_opt_spr, txtb_img, 288, _txtb_y + 16, _opt_width / _opt_spr_w, _opt_height / _opt_spr_h, 0, c_white, 1)
-
+	
+	if option_number > 0 {
+		draw_sprite_ext(_opt_spr, txtb_img, 288, _txtb_y + 16, _opt_width / _opt_spr_w, _opt_height / _opt_spr_h, 0, c_white, 1)
+	}
 
 	for (var op = 0; op < option_number; op++) {
 		// TODO: Draw a proper option box (9-slice)
@@ -112,17 +116,14 @@ if draw_char == text_length[page] && page == page_number - 1 {
 		//draw_sprite_ext(spr_optionbox, txtb_img, _txtb_x + 16, _txtb_y - _op_space * option_number + _op_space * op, _o_w / txtb_spr_w, (_op_space - 1) / txtb_spr_h, 0, c_white, 1);
 
 		// Draw the option's text
-		draw_text(_txtb_x + 10 + _op_bord,  _txtb_y - _op_space * option_number + _op_space * op + 2, option[op]);
+		draw_text((288 - _opt_width) + _op_box_bord,  _txtb_y - _op_space * option_number + _op_space * op + 2, option[op]);
 	
 		// Draw the arrow
 		if option_pos == op {
-			draw_sprite(spr_chatbox_point, 0, _txtb_x - 10, _txtb_y - _op_space * option_number + _op_space * op)	
+			draw_sprite(spr_chatbox_point, 0, (288 - _opt_width) - 16, _txtb_y - _op_space * option_number + _op_space * op)	
 		}		
 	}
 }
-
-// Draw the text bubble
-draw_sprite_ext(txtb_spr, txtb_img, _txtb_x, _txtb_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 1);
 
 // Draw the actual text
 // String "arrays" start at 1. Stupid, I know
