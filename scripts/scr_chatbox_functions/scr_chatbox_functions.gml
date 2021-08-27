@@ -31,6 +31,11 @@ function scr_text(_text){
 				name_string[page_number] = "Player";
 				name_textbox_color[page_number] = $0a337a;
 				break;
+			case "Alex":
+				speaker_sprite[page_number] = spr_alex_yiikposting;
+				name_string[page_number] = "Alex";
+				name_textbox_color[page_number] = $0a337a;
+				break;
 			case "???":
 				name_string[page_number] = "???";
 				break;
@@ -47,15 +52,6 @@ function scr_option(_option, _link_id) {
 	option[option_number] = _option;
 	option_link_id[option_number] = _link_id;
 	option_number++;
-}
-
-/// @param name
-/// @param text_color
-/// @param box_color
-function scr_name(_name, _text_color, _box_color) {
-	name_string = _name;
-	name_color = _text_color;
-	name_textbox_color = _box_color;
 }
 
 /// @param text_id
