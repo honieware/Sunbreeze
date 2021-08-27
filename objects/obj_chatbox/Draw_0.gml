@@ -86,10 +86,6 @@ if setup == false {
 			
 			// Get current width of the line
 			var _txt_up_to_char = string_copy(text[p], 1, _char_pos);
-			show_debug_message("Second CHAR")
-			show_debug_message("C: " + string(c))
-			show_debug_message("P: " + string(p))
-			show_debug_message("Char: " + string(char[c, p]))
 			var _current_txt_w = string_width(_txt_up_to_char) - string_width(char[c, p]);
 			var _txt_line = 0;
 			
@@ -113,9 +109,25 @@ if setup == false {
 }
 
 // ---------- Typing the text ----------
-if (draw_char < text_length[page]) { // If not the final character
-	draw_char += text_spd;
-	draw_char = clamp(draw_char, 0, text_length[page]); // draw_char can't be higher than these values
+if text_pause_timer <= 0 {
+	if (draw_char < text_length[page]) { // If not the final character
+		draw_char += text_spd;
+		draw_char = clamp(draw_char, 0, text_length[page]); // draw_char can't be higher than these values
+		var _check_char = string_char_at(text[page], draw_char);
+		if _check_char == "." || _check_char == "?" || _check_char == "!" || _check_char == "," {  //inefficient lol
+			text_pause_timer = text_pause_time;	
+		} else {
+			// Typing sound
+			if snd_count < snd_delay {
+				snd_count ++	
+			} else {
+				snd_count = 0;
+				audio_play_sound(snd[page], 8, false);
+			}
+		}
+	}
+} else {
+	text_pause_timer--;	
 }
 
 // ---------- Flip through pages ----------
@@ -159,7 +171,7 @@ txtb_spr_h = sprite_get_height(txtb_spr[page]);
 if speaker_sprite[page] != noone {
 	sprite_index = speaker_sprite[page];
 	// When they're done talking, reset animation to first frame
-	if draw_char == text_length[page] {
+	if draw_char == text_length[page] || (draw_char == "." || draw_char == "?" || draw_char == "!" || draw_char == ",") {
 		image_index = 0;
 	}
 	var _speaker_x = textbox_x + portrait_x_offset[page];

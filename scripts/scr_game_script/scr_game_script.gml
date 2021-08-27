@@ -2,10 +2,17 @@
 function scr_game_script(_text_id){
 	switch (_text_id) {
 		
-		// Example dialogue!
+		// --- EXAMPLE DIALOGUE ---
+		// Used exclusively on the Test Room.
+		// It's pretty stupid, please ignore.
+		
+		case "rover_war":
+			scr_text("war crimes. :)", "Rover-Dream");
+			break;
+		
 		case "rover_welcome":
 			scr_text("Hello! The name's Rover. How about you, mrrow?", "Rover");
-			scr_text("WHAT THE FUCK IS GOING ON", "Alex");
+			scr_text("WHAT THE FUCK IS GOING ON", "Alex", 1);
 			scr_text("...", "Rover");
 			scr_option("Just a journalist.", "journal");
 			scr_option("Don't have one.", "no_name");

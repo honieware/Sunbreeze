@@ -39,6 +39,12 @@ name_textbox_color = $000000;
 
 setup = false;
 
+// Sound
+snd_delay = 4;
+snd_count = snd_delay;
+
 // Effects
 scr_set_defaults_for_text();
 last_free_space = 0;
+text_pause_timer = 0;
+text_pause_time = 16;

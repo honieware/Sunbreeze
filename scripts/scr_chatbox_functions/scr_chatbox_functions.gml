@@ -10,10 +10,14 @@ function scr_set_defaults_for_text() {
 	name_string[page_number] = noone;
 	name_color[page_number] = $ffffff;
 	name_textbox_color[page_number] = $666666;
+	
+	// TODO: Implement Animalese sound-alike... eventually
+	snd[page_number] = snd_beep;
 }
 
 /// @param text
 /// @param [character]
+/// @param [side]
 function scr_text(_text){
 
 	scr_set_defaults_for_text();
@@ -40,14 +44,19 @@ function scr_text(_text){
 				speaker_sprite[page_number] = spr_alex_yiikposting;
 				name_string[page_number] = "Alex";
 				name_textbox_color[page_number] = $0a337a;
-				speaker_side[page_number] = 1;
 				break;
 			case "???":
 				name_string[page_number] = "???";
 				break;
 		}
 	}
-		
+	
+	// The side the character is on
+	// Get character info
+	if argument_count > 2 {
+		speaker_side[page_number] = argument[2];
+	}
+
 	page_number++;
 
 }

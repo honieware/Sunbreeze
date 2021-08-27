@@ -23,6 +23,7 @@
     {"id":{"name":"spr_rug_seaplane","path":"sprites/spr_rug_seaplane/spr_rug_seaplane.yy",},"order":9,},
     {"id":{"name":"spr_player_walk_left","path":"sprites/spr_player_walk_left/spr_player_walk_left.yy",},"order":2,},
     {"id":{"name":"spr_collision","path":"sprites/spr_collision/spr_collision.yy",},"order":0,},
+    {"id":{"name":"snd_beep","path":"sounds/snd_beep/snd_beep.yy",},"order":0,},
     {"id":{"name":"spr_testroom","path":"sprites/spr_testroom/spr_testroom.yy",},"order":5,},
     {"id":{"name":"spr_player_idle_down","path":"sprites/spr_player_idle_down/spr_player_idle_down.yy",},"order":0,},
     {"id":{"name":"spr_player_idle_left","path":"sprites/spr_player_idle_left/spr_player_idle_left.yy",},"order":1,},
