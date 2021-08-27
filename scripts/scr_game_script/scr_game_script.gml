@@ -12,35 +12,36 @@ function scr_game_script(_text_id){
 			scr_option("...", "tongue");
 			break;
 			case "journal":
-				scr_text("Aaaah. So I take it you're one of those low-lifes, then?");
-				scr_text("...Pffft, I was just kidding! You should've seen the look in your mug -");
-				scr_text("You're good, you're good.");
+				scr_text("Aaaah. So I take it you're one of those low-lifes, then?", "Rover");
+				scr_text("...Pffft, I was just kidding! You should've seen the look in your mug -", "Rover");
+				scr_text("You're good, you're good.", "Rover");
 				break;
 			case "no_name":
-				scr_text("Whaaaat?!");
-				scr_text("What do you mean you have no name? EVERYONE'S got a name!");
+				scr_text("Whaaaat?!", "Rover");
+				scr_text("What do you mean you have no name? EVERYONE'S got a name!", "Rover");
 				scr_option("Well, I don't.", "push_through");
 				scr_option("Consider yourself lucky.", "tease");
 				break;
 				case "push_through":
-					scr_text("My, my! I'm glad to hear there's still plenty of rude people in the world.");
-					scr_text("Y'know what? I'm gonna sit here, just to spite you.");
-					scr_text("Make this plane ride less plain and all.");
+					scr_text("My, my! I'm glad to hear there's still plenty of rude people in the world.", "Rover");
+					scr_text("Y'know what? I'm gonna sit here, just to spite you.", "Rover");
+					scr_text("Make this plane ride less plain and all.", "Rover");
 					break;
 				case "tease":
-					scr_text("I suppose I should, shouldn't I?");
-					scr_text("At least I'm not some 'Unknown Cat' of sorts...");
+					scr_text("I suppose I should, shouldn't I?", "Rover");
+					scr_text("At least I'm not some 'Unknown Cat' of sorts...", "Rover");
 					break;
 			case "tongue":
-				scr_text("...What, cat got your tongue?");
-				scr_text("Suit yourself, par'ner. Mutes have it easy, you know.");
-				scr_text("Don't have to say a single thing and people will still talk to you.");
+				scr_text("You kinda just... nod along in silence.")
+				scr_text("...What, cat got your tongue?", "Rover");
+				scr_text("Suit yourself, par'ner. Mutes have it easy, you know.", "Rover");
+				scr_text("Don't have to say a single thing and people will still talk to you.", "Rover");
 				break;
 			
 		case "rover_repeat":
-			scr_text("Dude, I'm just a game NPC.");
-			scr_text("I'll be repeating this dialogue until you move on.");
-			scr_text("It'd be smart to...");
+			scr_text("Dude, I'm just a game NPC.", "Rover");
+			scr_text("I'll be repeating this dialogue until you move on.", "Rover");
+			scr_text("It'd be smart to...", "Player");
 			break;
 	}
 }

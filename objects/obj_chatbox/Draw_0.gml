@@ -21,7 +21,7 @@ if setup == false {
 		
 		// Character on the left
 		text_x_offset[p] = 80;
-		portrait_x_offset[p] = 64;
+		portrait_x_offset[p] = 70;
 		
 		// Character on the middle
 		if speaker_side[p] == 0 {
@@ -37,11 +37,11 @@ if setup == false {
 		
 		// No character (center textbox)
 		if speaker_sprite[p] == noone {
-			text_x_offset[p] = 24;
+			text_x_offset[p] = 22;
 		}
 		
 		// Get X position for textbox
-		text_x_offset[p] = 24;
+		text_x_offset[p] = 22;
 		
 		// NOTE: This is all mega big brain stuff I don't quite understand yet.
 		// Modify with caution!
@@ -163,7 +163,7 @@ if speaker_sprite[page] != noone {
 		_speaker_x += sprite_width;
 	}
 	//draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x + portrait_x_offset[page], textbox_y, sprite_width / txtb_spr_w, sprite_height / txtb_spr_h, 0, c_white, 1);
-	draw_sprite_ext(sprite_index, image_index, _speaker_x, textbox_y + 5, speaker_side[page], 1, 0, c_white, 1);
+	draw_sprite_ext(sprite_index, image_index, _speaker_x, textbox_y + 9, 1, 1, 0, c_white, 1);
 }
 
 // Draw the text bubble
