@@ -53,7 +53,6 @@
     {"id":{"name":"obj_planechair_back_double","path":"objects/obj_planechair_back_double/obj_planechair_back_double.yy",},"order":7,},
     {"id":{"name":"scr_chatbox_functions","path":"scripts/scr_chatbox_functions/scr_chatbox_functions.yy",},"order":1,},
     {"id":{"name":"spr_chatbox","path":"sprites/spr_chatbox/spr_chatbox.yy",},"order":1,},
-    {"id":{"name":"InitGame","path":"scripts/InitGame/InitGame.yy",},"order":0,},
     {"id":{"name":"obj_chatbox","path":"objects/obj_chatbox/obj_chatbox.yy",},"order":0,},
     {"id":{"name":"obj_carpet_seaplane","path":"objects/obj_carpet_seaplane/obj_carpet_seaplane.yy",},"order":0,},
     {"id":{"name":"spr_camera","path":"sprites/spr_camera/spr_camera.yy",},"order":3,},

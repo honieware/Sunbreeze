@@ -15,6 +15,11 @@ page = 0; // Text page :)
 page_number = 0;
 text[0] = "";
 text_length[0] = string_length(text[0]);
+
+char[0, 0] = "";
+char_x[0, 0] = 0;
+char_y[0, 0] = 0;
+
 draw_char = 0; // How many of the characters are currently being drawn
 text_spd = 1;
 text_def_color = $5b7481
@@ -28,10 +33,13 @@ option_number = 0;
 option_x = 302;
 
 // Name box
-nmeb_width = 47;
 nmeb_height = 18;
 name_string = "";
 name_color = $ffffff;
 name_textbox_color = $000000;
 
 setup = false;
+
+// Effects
+scr_set_defaults_for_text();
+last_free_space = 0;
