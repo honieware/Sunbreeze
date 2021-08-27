@@ -59,7 +59,7 @@ if (accept_key) {
 }
 
 // ---------- Draw the window ----------
-var _txtb_x = textbox_x + 24;
+var _txtb_x = textbox_x + 38;
 var _txtb_y = textbox_y;
 
 txtb_img += txtb_img_spd;
@@ -106,22 +106,22 @@ if draw_char == text_length[page] && page == page_number - 1 {
 	var _opt_spr_h = sprite_get_height(_opt_spr);
 	
 	if option_number > 0 {
-		draw_sprite_ext(_opt_spr, txtb_img, 288, _txtb_y + 16, _opt_width / _opt_spr_w, _opt_height / _opt_spr_h, 0, c_white, 1)
+		draw_sprite_ext(_opt_spr, txtb_img, option_x, _txtb_y + 16, _opt_width / _opt_spr_w, _opt_height / _opt_spr_h, 0, c_white, 1)
 	}
 
 	for (var op = 0; op < option_number; op++) {
-		// TODO: Draw a proper option box (9-slice)
-		//var _o_w = string_width(option[op]) + _op_bord*2;
-		//var _opt_width = array_length(option) * string_height(option[op]) + _op_bord*2 + _op_box_bord*2;
-		//draw_sprite_ext(spr_optionbox, txtb_img, _txtb_x + 16, _txtb_y - _op_space * option_number + _op_space * op, _o_w / txtb_spr_w, (_op_space - 1) / txtb_spr_h, 0, c_white, 1);
-
-		// Draw the option's text
-		draw_text((288 - _opt_width) + _op_box_bord,  _txtb_y - _op_space * option_number + _op_space * op + 2, option[op]);
-	
-		// Draw the arrow
+		
+		var _o_w = string_width(option[op]) + _op_bord*2;
+		var _opt_spr_w = sprite_get_width(spr_selectbox);
+		
+		// Draw the selected box, arrow
 		if option_pos == op {
-			draw_sprite(spr_chatbox_point, 0, (288 - _opt_width) - 16, _txtb_y - _op_space * option_number + _op_space * op)	
-		}		
+			draw_sprite_ext(spr_selectbox, txtb_img, (option_x - _opt_width) + _op_box_bord - 5, _txtb_y - _op_space * option_number + _op_space * op + 5, _o_w / _opt_spr_w, 1, 0, c_white, 1);
+			draw_sprite(spr_chatbox_point, 0, (option_x - _opt_width) - 16, _txtb_y - _op_space * option_number + _op_space * op)	
+		}	
+		
+		// Draw the option's text
+		draw_text((option_x - _opt_width) + _op_box_bord,  _txtb_y - _op_space * option_number + _op_space * op + 2, option[op]);	
 	}
 }
 
