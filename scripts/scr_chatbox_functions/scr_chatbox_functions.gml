@@ -2,13 +2,43 @@ function scr_set_defaults_for_text() {
 	line_break_pos[0, page_number] = 999; // Stores where in the text should the text move to the next line
 	line_break_num[page_number] = 0;
 	line_break_offset[page_number] = 0;
+	
+	txtb_spr[page_number] = spr_chatbox;
+	speaker_sprite[page_number] = noone;
+	speaker_side[page_number] = -1; // Left: 1, Center: 0, Right: -1
+	
+	name_string[page_number] = noone;
+	name_color[page_number] = $ffffff;
+	name_textbox_color[page_number] = $666666;
 }
 
 /// @param text
+/// @param [character]
 function scr_text(_text){
+
 	scr_set_defaults_for_text();
 	text[page_number] = _text;
+	
+	// Get character info
+	if argument_count > 1 {
+		switch(argument[1]) {
+			case "Rover":
+				speaker_sprite[page_number] = spr_rover_neutral;
+				name_string[page_number] = "Rover";
+				name_textbox_color[page_number] = $d36356;
+				break;
+			case "Player":
+				name_string[page_number] = "Player";
+				name_textbox_color[page_number] = $0a337a;
+				break;
+			case "???":
+				name_string[page_number] = "???";
+				break;
+		}
+	}
+		
 	page_number++;
+
 }
 
 /// @param option

@@ -6,7 +6,6 @@ textbox_height = 69; // nice
 border = 16; // Border between the chatbox and the letters
 line_sep = 15; // Separation between lines (vertical)
 line_width = textbox_width - border*2;
-txtb_spr = spr_chatbox;
 txtb_img = 0;
 txtb_img_spd = 0;
 

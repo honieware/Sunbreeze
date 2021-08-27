@@ -19,6 +19,21 @@ if setup == false {
 		// and store that number in the "text_length" array
 		text_length[p] = string_length(text[p]);
 		
+		// Character on the left
+		text_x_offset[p] = 80;
+		portrait_x_offset[p] = 8;
+
+		// Character on the right
+		if speaker_side[p] == -1 {
+			text_x_offset[p] = 8;
+			portrait_x_offset[p] = 216;
+		}
+		
+		// No character (center textbox)
+		if speaker_sprite[p] == noone {
+			text_x_offset[p] = 24;
+		}
+		
 		// Get X position for textbox
 		text_x_offset[p] = 24;
 		
@@ -130,11 +145,23 @@ var _txtb_x = textbox_x + 38;
 var _txtb_y = textbox_y;
 
 txtb_img += txtb_img_spd;
-txtb_spr_w = sprite_get_width(txtb_spr);
-txtb_spr_h = sprite_get_height(txtb_spr);
+
+txtb_spr_w = sprite_get_width(txtb_spr[page]);
+txtb_spr_h = sprite_get_height(txtb_spr[page]);
+
+// Draw the speaker
+if speaker_sprite[page] != noone {
+	sprite_index = speaker_sprite[page];
+	var _speaker_x = textbox_x + portrait_x_offset[page];
+	if speaker_side[page] == -1 {
+		_speaker_x += sprite_width;
+	}
+	//draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x + portrait_x_offset[page], textbox_y, sprite_width / txtb_spr_w, sprite_height / txtb_spr_h, 0, c_white, 1);
+	draw_sprite_ext(sprite_index, image_index, _speaker_x, textbox_y, speaker_side[page], 1, 0, c_white, 1);
+}
 
 // Draw the text bubble
-draw_sprite_ext(txtb_spr, txtb_img, _txtb_x, _txtb_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 1);
+draw_sprite_ext(txtb_spr[page], txtb_img, _txtb_x, _txtb_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 1);
 
 // ---------- Options ----------
 if draw_char == text_length[page] && page == page_number - 1 {
@@ -197,17 +224,19 @@ nmeb_spr = spr_namebox;
 nmeb_spr_w = sprite_get_width(nmeb_spr);
 nmeb_spr_h = sprite_get_height(nmeb_spr);
 name_spacing = 4;
-name_str_w = string_width(name_string) + name_spacing * 2
+name_str_w = string_width(name_string[page]) + name_spacing * 2
 
-// Draw the namebox bubble
-draw_sprite_ext(nmeb_spr, txtb_img, _txtb_x + 40, _txtb_y, name_str_w / nmeb_spr_w, nmeb_height / nmeb_spr_h, 0, name_textbox_color, 1);
+if name_string[page] != noone {
+	// Draw the namebox bubble
+	draw_sprite_ext(nmeb_spr, txtb_img, _txtb_x + 40, _txtb_y, name_str_w / nmeb_spr_w, nmeb_height / nmeb_spr_h, 0, name_textbox_color[page], 1);
 
-// Draw the namebox's text
-draw_set_halign(fa_center);
-draw_set_color(name_color);
-draw_text_ext(_txtb_x + 42, _txtb_y - 6, name_string, line_sep, line_width);
-draw_set_halign(fa_left);
-draw_set_color(text_def_color);
+	// Draw the namebox's text
+	draw_set_halign(fa_center);
+	draw_set_color(name_color[page]);
+	draw_text_ext(_txtb_x + 42, _txtb_y - 6, name_string[page], line_sep, line_width);
+	draw_set_halign(fa_left);
+	draw_set_color(text_def_color);
+}
 
 // Draw the actual text
 // String "arrays" start at 1. Stupid, I know
