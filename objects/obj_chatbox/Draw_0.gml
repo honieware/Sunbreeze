@@ -125,15 +125,22 @@ if draw_char == text_length[page] && page == page_number - 1 {
 	}
 }
 
-// Draw the namebox bubble
-/*
+// Name box
 nmeb_spr = spr_namebox;
 nmeb_spr_w = sprite_get_width(nmeb_spr);
 nmeb_spr_h = sprite_get_height(nmeb_spr);
-show_debug_message(nmeb_spr_w);
-show_debug_message(nmeb_spr_h);
-draw_sprite_ext(nmeb_spr, txtb_img, _txtb_x, _txtb_y - 12, nmeb_width / nmeb_spr_w, nmeb_height / nmeb_spr_h, 0, c_red, 1);
-*/
+name_spacing = 4;
+name_str_w = string_width(name_string) + name_spacing * 2
+
+// Draw the namebox bubble
+draw_sprite_ext(nmeb_spr, txtb_img, _txtb_x + 40, _txtb_y, name_str_w / nmeb_spr_w, nmeb_height / nmeb_spr_h, 0, name_textbox_color, 1);
+
+// Draw the namebox's text
+draw_set_halign(fa_center);
+draw_set_color(name_color);
+draw_text_ext(_txtb_x + 42, _txtb_y - 6, name_string, line_sep, line_width);
+draw_set_halign(fa_left);
+draw_set_color(text_def_color);
 
 // Draw the actual text
 // String "arrays" start at 1. Stupid, I know

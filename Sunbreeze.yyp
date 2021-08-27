@@ -43,6 +43,7 @@
     {"id":{"name":"obj_collision","path":"objects/obj_collision/obj_collision.yy",},"order":3,},
     {"id":{"name":"spr_wall_seaplane","path":"sprites/spr_wall_seaplane/spr_wall_seaplane.yy",},"order":14,},
     {"id":{"name":"obj_camera","path":"objects/obj_camera/obj_camera.yy",},"order":0,},
+    {"id":{"name":"scr_character_settings","path":"scripts/scr_character_settings/scr_character_settings.yy",},"order":3,},
     {"id":{"name":"spr_dal_wall","path":"sprites/spr_dal_wall/spr_dal_wall.yy",},"order":2,},
     {"id":{"name":"spr_planechair_double","path":"sprites/spr_planechair_double/spr_planechair_double.yy",},"order":8,},
     {"id":{"name":"spr_namebox","path":"sprites/spr_namebox/spr_namebox.yy",},"order":4,},
