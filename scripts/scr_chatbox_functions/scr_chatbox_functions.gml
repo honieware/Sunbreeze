@@ -35,6 +35,7 @@ function scr_text(_text){
 				speaker_sprite[page_number] = spr_alex_yiikposting;
 				name_string[page_number] = "Alex";
 				name_textbox_color[page_number] = $0a337a;
+				speaker_side[page_number] = 1;
 				break;
 			case "???":
 				name_string[page_number] = "???";
