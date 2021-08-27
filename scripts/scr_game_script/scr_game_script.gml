@@ -39,8 +39,8 @@ function scr_game_script(_text_id){
 				break;
 			
 		case "rover_repeat":
-			scr_text("Dude, I'm just a game NPC.", "Rover");
-			scr_text("I'll be repeating this dialogue until you move on.", "Rover");
+			scr_text("Dude, I'm just a game NPC.", "Rover-Dream");
+			scr_text("I'll be repeating this dialogue until you move on.", "Rover-Dream");
 			scr_text("It'd be smart to...", "Player");
 			break;
 	}

@@ -27,6 +27,11 @@ function scr_text(_text){
 				name_string[page_number] = "Rover";
 				name_textbox_color[page_number] = $d36356;
 				break;
+			case "Rover-Dream":
+				speaker_sprite[page_number] = spr_rover_placeholder;
+				name_string[page_number] = "Rover";
+				name_textbox_color[page_number] = $d36356;
+				break;
 			case "Player":
 				name_string[page_number] = "Player";
 				name_textbox_color[page_number] = $0a337a;

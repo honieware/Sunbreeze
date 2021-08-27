@@ -1,4 +1,4 @@
-accept_key = keyboard_check_pressed(vk_space);
+accept_key = keyboard_check_pressed(ord("E"));
 
 textbox_x = camera_get_view_x(view_camera[0]);
 textbox_y = camera_get_view_y(view_camera[0]) + 100;
@@ -158,6 +158,10 @@ txtb_spr_h = sprite_get_height(txtb_spr[page]);
 // Draw the speaker
 if speaker_sprite[page] != noone {
 	sprite_index = speaker_sprite[page];
+	// When they're done talking, reset animation to first frame
+	if draw_char == text_length[page] {
+		image_index = 0;
+	}
 	var _speaker_x = textbox_x + portrait_x_offset[page];
 	if speaker_side[page] == -1 {
 		_speaker_x += sprite_width;
