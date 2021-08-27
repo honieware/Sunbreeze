@@ -116,6 +116,10 @@ if text_pause_timer <= 0 {
 		var _check_char = string_char_at(text[page], draw_char);
 		if _check_char == "." || _check_char == "?" || _check_char == "!" || _check_char == "," {  //inefficient lol
 			text_pause_timer = text_pause_time;	
+			if !audio_is_playing(snd[page]) {
+				// Punctuation sound (bebebese)
+				audio_play_sound(spr_punctuation, 8, false);
+			}
 		} else {
 			// Typing sound
 			if snd_count < snd_delay {

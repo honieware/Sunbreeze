@@ -27,6 +27,7 @@
     {"id":{"name":"spr_testroom","path":"sprites/spr_testroom/spr_testroom.yy",},"order":5,},
     {"id":{"name":"spr_player_idle_down","path":"sprites/spr_player_idle_down/spr_player_idle_down.yy",},"order":0,},
     {"id":{"name":"spr_player_idle_left","path":"sprites/spr_player_idle_left/spr_player_idle_left.yy",},"order":1,},
+    {"id":{"name":"spr_punctuation","path":"sounds/spr_punctuation/spr_punctuation.yy",},"order":1,},
     {"id":{"name":"spr_settings","path":"sprites/spr_settings/spr_settings.yy",},"order":1,},
     {"id":{"name":"spr_chatbox_point","path":"sprites/spr_chatbox_point/spr_chatbox_point.yy",},"order":2,},
     {"id":{"name":"obj_wall_seaplane","path":"objects/obj_wall_seaplane/obj_wall_seaplane.yy",},"order":14,},
