@@ -187,7 +187,15 @@ if speaker_sprite[page] != noone {
 		_speaker_x += sprite_width;
 	}
 	//draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x + portrait_x_offset[page], textbox_y, sprite_width / txtb_spr_w, sprite_height / txtb_spr_h, 0, c_white, 1);
-	draw_sprite_ext(sprite_index, image_index, _speaker_x, textbox_y + 9, 1, 1, 0, c_white, 1);
+	
+	// Ease in
+	curve_spd += 1/20;
+	position = animcurve_channel_evaluate(curve_ease, curve_spd);
+	var _ease_start = _speaker_x + 15;
+	var _distance = _speaker_x - _ease_start
+	
+	
+	draw_sprite_ext(sprite_index, image_index, _speaker_x + (_distance * position), textbox_y + 9, 1, 1, 0, c_white, 1);
 }
 
 // Draw the text bubble

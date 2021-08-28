@@ -47,6 +47,7 @@
     {"id":{"name":"spr_depth","path":"sprites/spr_depth/spr_depth.yy",},"order":4,},
     {"id":{"name":"scr_game_script","path":"scripts/scr_game_script/scr_game_script.yy",},"order":2,},
     {"id":{"name":"spr_carpet_worn","path":"sprites/spr_carpet_worn/spr_carpet_worn.yy",},"order":1,},
+    {"id":{"name":"crv_curves","path":"animcurves/crv_curves/crv_curves.yy",},"order":0,},
     {"id":{"name":"animalese_v","path":"sounds/animalese_v/animalese_v.yy",},"order":21,},
     {"id":{"name":"spr_emergency_light","path":"sprites/spr_emergency_light/spr_emergency_light.yy",},"order":3,},
     {"id":{"name":"chatbox_test","path":"rooms/chatbox_test/chatbox_test.yy",},"order":1,},

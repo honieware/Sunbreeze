@@ -48,3 +48,7 @@ scr_set_defaults_for_text();
 last_free_space = 0;
 text_pause_timer = 0;
 text_pause_time = 6;
+
+// Textbox animations
+curve_ease = animcurve_get_channel(crv_curves, "ease");
+curve_spd = 0;
