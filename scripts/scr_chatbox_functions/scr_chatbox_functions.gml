@@ -26,6 +26,8 @@ function scr_set_defaults_for_text() {
 	name_color[page_number] = $ffffff;
 	name_textbox_color[page_number] = $666666;
 	
+	background_spr[page_number] = spr_background_player;
+	
 	snd[page_number] = noone;
 }
 
@@ -76,12 +78,14 @@ function scr_text(_text){
 				speaker_sprite[page_number] = spr_rover_neutral;
 				name_string[page_number] = "Rover";
 				name_textbox_color[page_number] = $d36356;
+				background_spr[page_number] = spr_background_rover;
 				// TODO: Implement animalese pitches
 				break;
 			case "Rover-Dream":
 				speaker_sprite[page_number] = spr_rover_placeholder;
 				name_string[page_number] = "Rover";
 				name_textbox_color[page_number] = $d36356;
+				background_spr[page_number] = spr_background_rover;
 				break;
 			case "Player":
 				name_string[page_number] = "Player";

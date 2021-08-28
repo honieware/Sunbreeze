@@ -105,6 +105,24 @@ if setup == false {
 	}
 }
 
+// ---------- Creating the background ----------
+
+if background_spr[page] {
+	var _bg_w = sprite_get_width(background_spr[page]);
+	var _bg_h = sprite_get_height(background_spr[page]);
+	var _bg_alpha = 0.5;
+	var _v_w = camera_get_view_width(view_camera[0]) + _bg_w;
+	var _v_h = camera_get_view_height(view_camera[0]) + _bg_h;
+	
+	for (var _bg_x = 0; _bg_x < _v_w; _bg_x++) {
+		for (var _bg_y = 0; _bg_y < _v_h; _bg_y++) {
+			draw_sprite_ext(background_spr[page], 0, _bg_x, _bg_y, 1, 1, 0, c_white, _bg_alpha);
+			_bg_y += _bg_h - 1;
+		}
+		_bg_x += _bg_w - 1;
+	}
+}
+
 // ---------- Typing the text ----------
 if text_pause_timer <= 0 {
 	if (draw_char < text_length[page]) { // If not the final character
@@ -186,8 +204,7 @@ if speaker_sprite[page] != noone {
 	if speaker_side[page] == -1 {
 		_speaker_x += sprite_width;
 	}
-	//draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x + portrait_x_offset[page], textbox_y, sprite_width / txtb_spr_w, sprite_height / txtb_spr_h, 0, c_white, 1);
-
+	
 	// Ease in
 
 	if (old_speaker_name != name_string[page])  {
@@ -207,10 +224,12 @@ if speaker_sprite[page] != noone {
 // Draw the text bubble
 draw_sprite_ext(txtb_spr[page], txtb_img, _txtb_x, _txtb_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 1);
 
+// Simple sine-like movement
+float_number += 4;
+var _float_arrow = dsin(float_number);
+
 // Draw the "next dialogue" arrow
-if draw_char == text_length[page] {
-	float_number += 4;
-	var _float_arrow = dsin(float_number);
+if draw_char == text_length[page] && page != page_number - 1 {
 	draw_sprite(spr_continue_arrow, 0, _txtb_x + (textbox_width / 2), (textbox_height + _txtb_y) - 5 + _float_arrow);
 }
 
@@ -262,7 +281,7 @@ if draw_char == text_length[page] && page == page_number - 1 {
 		// Draw the selected box, arrow
 		if option_pos == op {
 			draw_sprite_ext(spr_selectbox, txtb_img, (option_x - _opt_width) + _op_box_bord - 5, _txtb_y - _op_space * option_number + _op_space * op + 5, _o_w / _opt_spr_w, 1, 0, c_white, 1);
-			draw_sprite(spr_chatbox_point, 0, (option_x - _opt_width) - 16, _txtb_y - _op_space * option_number + _op_space * op)	
+			draw_sprite(spr_chatbox_point, 0, (option_x - _opt_width - _float_arrow) - 16, _txtb_y - _op_space * option_number + _op_space * op)	
 		}	
 		
 		// Draw the option's text
