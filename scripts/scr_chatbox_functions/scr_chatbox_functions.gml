@@ -12,7 +12,7 @@ function scr_set_defaults_for_text() {
 	name_textbox_color[page_number] = $666666;
 	
 	// TODO: Implement Animalese sound-alike... eventually
-	snd[page_number] = snd_beep;
+	snd[page_number] = noone;
 }
 
 /// @param text
@@ -38,12 +38,14 @@ function scr_text(_text){
 				break;
 			case "Player":
 				name_string[page_number] = "Player";
-				name_textbox_color[page_number] = $0a337a;
+				name_textbox_color[page_number] = $0a337a
+				snd[page_number] = animalese_beep;
 				break;
 			case "Alex":
 				speaker_sprite[page_number] = spr_alex_yiikposting;
 				name_string[page_number] = "Alex";
 				name_textbox_color[page_number] = $0a337a;
+				snd[page_number] = animalese_beep;
 				break;
 			case "???":
 				name_string[page_number] = "???";

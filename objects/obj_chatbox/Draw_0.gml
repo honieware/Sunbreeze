@@ -111,20 +111,25 @@ if text_pause_timer <= 0 {
 		draw_char += text_spd;
 		draw_char = clamp(draw_char, 0, text_length[page]); // draw_char can't be higher than these values
 		var _check_char = string_char_at(text[page], draw_char);
-		if _check_char == "." || _check_char == "?" || _check_char == "!" || _check_char == "," {  //inefficient lol
+		if _check_char == "?" || _check_char == "!" || _check_char == "," {  //inefficient lol
 			text_pause_timer = text_pause_time;	
-			/*if !audio_is_playing(snd[page]) {
+			if !audio_is_playing(snd[page]) && _check_char == "." {
 				// Punctuation sound (bebebese)
-				audio_play_sound(spr_punctuation, 8, false);
-			}*/
+			}
 		} else {
 			// Typing sound
 			if snd_count < snd_delay {
 				snd_count ++	
 			} else {
-				if (asset_get_index("animalese_" + string_lower(_check_char))) {
+				if _check_char == "." {
 					snd_count = 0;
-					audio_play_sound(asset_get_index("animalese_" + _check_char), 8, false);
+					audio_play_sound(animalese_beep, 8, false);
+				} else if (snd[page] != noone) {
+					snd_count = 0;
+					audio_play_sound(snd[page], 8, false);
+				} else if (asset_get_index("animalese_" + string_lower(_check_char))) {
+					snd_count = 0;
+					audio_play_sound(asset_get_index("animalese_" + string_lower(_check_char)), 8, false);
 				}
 			}
 		}

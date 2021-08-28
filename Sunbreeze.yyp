@@ -90,6 +90,7 @@
     {"id":{"name":"obj_rover","path":"objects/obj_rover/obj_rover.yy",},"order":0,},
     {"id":{"name":"animalese_b","path":"sounds/animalese_b/animalese_b.yy",},"order":1,},
     {"id":{"name":"animalese_x","path":"sounds/animalese_x/animalese_x.yy",},"order":23,},
+    {"id":{"name":"animalese_beep","path":"sounds/animalese_beep/animalese_beep.yy",},"order":0,},
     {"id":{"name":"spr_exit","path":"sprites/spr_exit/spr_exit.yy",},"order":4,},
     {"id":{"name":"spr_windowlight_left","path":"sprites/spr_windowlight_left/spr_windowlight_left.yy",},"order":12,},
     {"id":{"name":"animalese_u","path":"sounds/animalese_u/animalese_u.yy",},"order":20,},
@@ -143,6 +144,7 @@
     {"folderPath":"folders/Sprites/portraits/rover.yy","order":1,"resourceVersion":"1.0","name":"rover","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Sprites/portraits/misc.yy","order":2,"resourceVersion":"1.0","name":"misc","tags":[],"resourceType":"GMFolder",},
     {"folderPath":"folders/Sounds/animalese.yy","order":2,"resourceVersion":"1.0","name":"animalese","tags":[],"resourceType":"GMFolder",},
+    {"folderPath":"folders/Sounds/animalese/special.yy","order":27,"resourceVersion":"1.0","name":"special","tags":[],"resourceType":"GMFolder",},
   ],
   "AudioGroups": [
     {"targets":-1,"resourceVersion":"1.3","name":"audiogroup_default","resourceType":"GMAudioGroup",},
