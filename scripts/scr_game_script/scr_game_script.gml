@@ -12,7 +12,9 @@ function scr_game_script(_text_id){
 		
 		case "rover_welcome":
 			scr_text("Hello! The name's Rover. How about you, mrrow?", "Rover");
+				scr_text_color(18, 23, c_teal, c_teal, c_teal, c_teal); scr_text_float(40, 45);
 			scr_text("WHAT THE FUCK IS GOING ON", "Alex", 1);
+				scr_text_shake(0, 24);
 			scr_text("...", "Rover");
 			scr_option("Just a journalist.", "journal");
 			scr_option("Don't have one.", "no_name");
