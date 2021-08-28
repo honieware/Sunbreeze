@@ -55,9 +55,6 @@ if setup == false {
 			
 			// Get current width of the line
 			var _txt_up_to_char = string_copy(text[p], 1, _char_pos);
-			show_debug_message("First CHAR")
-			show_debug_message("C: " + string(c))
-			show_debug_message("P: " + string(p))
 			var _current_txt_w = string_width(_txt_up_to_char) - string_width(char[c, p]);
 			
 			// Get the last free space
@@ -116,17 +113,19 @@ if text_pause_timer <= 0 {
 		var _check_char = string_char_at(text[page], draw_char);
 		if _check_char == "." || _check_char == "?" || _check_char == "!" || _check_char == "," {  //inefficient lol
 			text_pause_timer = text_pause_time;	
-			if !audio_is_playing(snd[page]) {
+			/*if !audio_is_playing(snd[page]) {
 				// Punctuation sound (bebebese)
 				audio_play_sound(spr_punctuation, 8, false);
-			}
+			}*/
 		} else {
 			// Typing sound
 			if snd_count < snd_delay {
 				snd_count ++	
 			} else {
-				snd_count = 0;
-				audio_play_sound(snd[page], 8, false);
+				if (asset_get_index("animalese_" + string_lower(_check_char))) {
+					snd_count = 0;
+					audio_play_sound(asset_get_index("animalese_" + _check_char), 8, false);
+				}
 			}
 		}
 	}

@@ -20,7 +20,7 @@ char_x[0, 0] = 0;
 char_y[0, 0] = 0;
 
 draw_char = 0; // How many of the characters are currently being drawn
-text_spd = 1;
+text_spd = 0.5;
 text_def_color = $5b7481
 draw_set_color(text_def_color);
 
@@ -40,11 +40,11 @@ name_textbox_color = $000000;
 setup = false;
 
 // Sound
-snd_delay = 6;
+snd_delay = 2;
 snd_count = snd_delay;
 
 // Effects
 scr_set_defaults_for_text();
 last_free_space = 0;
 text_pause_timer = 0;
-text_pause_time = 16;
+text_pause_time = 6;
