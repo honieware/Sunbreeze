@@ -207,6 +207,13 @@ if speaker_sprite[page] != noone {
 // Draw the text bubble
 draw_sprite_ext(txtb_spr[page], txtb_img, _txtb_x, _txtb_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 1);
 
+// Draw the "next dialogue" arrow
+if draw_char == text_length[page] {
+	float_number += 4;
+	var _float_arrow = dsin(float_number);
+	draw_sprite(spr_continue_arrow, 0, _txtb_x + (textbox_width / 2), (textbox_height + _txtb_y) - 5 + _float_arrow);
+}
+
 // ---------- Options ----------
 if draw_char == text_length[page] && page == page_number - 1 {
 	

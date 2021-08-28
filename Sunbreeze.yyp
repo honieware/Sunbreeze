@@ -7,6 +7,7 @@
     {"id":{"name":"obj_rug_seaplane","path":"objects/obj_rug_seaplane/obj_rug_seaplane.yy",},"order":9,},
     {"id":{"name":"animalese_n","path":"sounds/animalese_n/animalese_n.yy",},"order":13,},
     {"id":{"name":"spr_player_walk_up","path":"sprites/spr_player_walk_up/spr_player_walk_up.yy",},"order":1,},
+    {"id":{"name":"spr_continue_arrow","path":"sprites/spr_continue_arrow/spr_continue_arrow.yy",},"order":8,},
     {"id":{"name":"spr_planechair","path":"sprites/spr_planechair/spr_planechair.yy",},"order":5,},
     {"id":{"name":"obj_player","path":"objects/obj_player/obj_player.yy",},"order":0,},
     {"id":{"name":"obj_emergency_light","path":"objects/obj_emergency_light/obj_emergency_light.yy",},"order":3,},

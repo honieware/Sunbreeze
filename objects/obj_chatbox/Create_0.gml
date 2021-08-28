@@ -53,3 +53,5 @@ text_pause_time = 6;
 curve_ease = animcurve_get_channel(crv_curves, "ease");
 curve_spd = 0;
 old_speaker_name = noone;
+
+float_number = 0;
