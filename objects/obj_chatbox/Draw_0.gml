@@ -30,16 +30,16 @@ if setup == false {
 		text_length[p] = string_length(text[p]);
 		
 		// Character on the left
-		portrait_x_offset[p] = 70;
+		portrait_x_offset[p] = 50;
 		
 		// Character on the middle
 		if speaker_side[p] == 0 {
-			portrait_x_offset[p] = 64;
+			portrait_x_offset[p] = 44;
 		}
 		
 		// Character on the right
 		if speaker_side[p] == -1 {
-			portrait_x_offset[p] = 128;
+			portrait_x_offset[p] = 98;
 		}
 		
 		// Get X position for textbox
@@ -225,21 +225,7 @@ if (typing_timer == 0) {
 		if speaker_side[page] == -1 {
 			_speaker_x += sprite_width;
 		}
-	
-		// Ease in
-
-		if (old_speaker_name != name_string[page])  {
-			curve_spd = 0;
-		}
-	
-		curve_spd += 1/20;
-		position = animcurve_channel_evaluate(curve_ease, curve_spd);
-		var _ease_start = _speaker_x + 15;
-		var _distance = _speaker_x - _ease_start
-	
-		draw_sprite_ext(sprite_index, image_index, _ease_start + (_distance * position), textbox_upleft_y + 9, 1, 1, 0, c_white, 0 + position);
-	
-		old_speaker_name = name_string[page];
+		draw_sprite_ext(sprite_index, image_index, _speaker_x, textbox_upleft_y + 9, 1, 1, 0, c_white, 1);
 	}
 	
 	// Draw the text bubble
@@ -362,59 +348,55 @@ if (typing_timer == 0) {
 
 // Decrease waiting timer
 if (typing_timer != 0) {
+	
 	typing_timer--;
+	
+	// Debugging
+	//room_speed = 2;
 
+	// ---------- Draw the portrait ----------
 
-	// ---------- Draw the window ----------
-	var _txtb_x = textbox_x;
-	var _txtb_y = textbox_y;
-
-	txtb_img += txtb_img_spd;
-
-	txtb_spr_w = sprite_get_width(txtb_spr[page]);
-	txtb_spr_h = sprite_get_height(txtb_spr[page]);
-
-	// Draw the speaker
-	/*
 	if speaker_sprite[page] != noone {
 		sprite_index = speaker_sprite[page];
-		// When they're done talking, reset animation to first frame
-		if draw_char == text_length[page] || (draw_char == "." || draw_char == "?" || draw_char == "!" || draw_char == ",") {
-			image_index = 0;
-		}
-		var _speaker_x = textbox_x + portrait_x_offset[page];
-		if speaker_side[page] == -1 {
-			_speaker_x += sprite_width;
-		}
-	
-		// Ease in
-
-		if (old_speaker_name != name_string[page])  {
-			curve_spd = 0;
-		}
-	
-		curve_spd += 1/20;
-		position = animcurve_channel_evaluate(curve_ease, curve_spd);
-		var _ease_start = _speaker_x + 15;
-		var _distance = _speaker_x - _ease_start
-	
-		draw_sprite_ext(sprite_index, image_index, _ease_start + (_distance * position), textbox_y + 9, 1, 1, 0, c_white, 0 + position);
+		// No bloody idea why 26 is the magic number.
+		var _speaker_x = textbox_x + portrait_x_offset[page] - 26;
+		var _x_offset = (ease_in_sine(typing_timer, _speaker_x, 15, 12));
+		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 12));
+		
+		draw_sprite_ext(sprite_index, 0, _x_offset, textbox_upleft_y + 9, 1, 1, 0, c_white, 1 - _alpha_offset);
 	
 		old_speaker_name = name_string[page];
 	}
-	*/
 
-	// Draw the text bubble
+	// ---------- Draw the window ----------
 	
-	show_debug_message("Original horizontal width: " + string(textbox_width));
-	show_debug_message("Original vertical width: " + string(textbox_height));
+	// Part 1: Small to big sprite
 	
-	var _stretchh = (ease_out_back(typing_timer, textbox_width, 10, 12));
-	var _stretchv = (ease_out_back(typing_timer, textbox_height, 5, 12));
+	if (typing_timer >= 6) {
+		var _t_timer = typing_timer - 6
+		
+		txtb_img += txtb_img_spd;
+
+		txtb_spr_w = sprite_get_width(txtb_spr[page]);
+		txtb_spr_h = sprite_get_height(txtb_spr[page]);
 	
-	show_debug_message("Horizontal width: " + string(_stretchh));
-	show_debug_message("Vertical width: " + string(_stretchv));
+		var _stretchh = (ease_in_sine(_t_timer, textbox_width + 10, -20, 6));
+		var _stretchv = (ease_in_sine(_t_timer, textbox_height + 5, -10, 6));
 	
-	//	draw_sprite_ext(txtb_spr[page], txtb_img, _txtb_x, _txtb_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 1);
-	draw_sprite_ext(txtb_spr[page], txtb_img, _txtb_x, _txtb_y, _stretchh / txtb_spr_w, _stretchv / txtb_spr_h, 0, c_white, 1);
+		draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x, textbox_y, _stretchh / txtb_spr_w, _stretchv / txtb_spr_h, 0, c_white, 1);
+	}
+	
+	// Part 2: Overshooting the target
+	
+	if (typing_timer < 6) {
+		txtb_img += txtb_img_spd;
+
+		txtb_spr_w = sprite_get_width(txtb_spr[page]);
+		txtb_spr_h = sprite_get_height(txtb_spr[page]);
+	
+		var _stretchh = (ease_out_back(typing_timer, textbox_width, 10, 6));
+		var _stretchv = (ease_out_back(typing_timer, textbox_height, 5, 6));
+	
+		draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x, textbox_y, _stretchh / txtb_spr_w, _stretchv / txtb_spr_h, 0, c_white, 1);
+	}
 }
