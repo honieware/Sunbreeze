@@ -81,7 +81,6 @@ function scr_text(_text){
 				name_textbox_color[page_number] = $d36356;
 				background_spr[page_number] = spr_background_rover;
 				snd_pitch_multiplier[page_number] = 1.4;
-				// TODO: Implement animalese pitches
 				break;
 			case "Rover-Dream":
 				speaker_sprite[page_number] = spr_rover_placeholder;
