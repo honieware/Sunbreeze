@@ -1,7 +1,15 @@
 accept_key = keyboard_check_pressed(ord("E"));
 
-textbox_x = camera_get_view_x(view_camera[0]);
-textbox_y = camera_get_view_y(view_camera[0]) + 100;
+textbox_x = camera_get_view_width(view_camera[0]) / 2;
+textbox_y = camera_get_view_height(view_camera[0]) - 48;
+
+// Legacy for old code
+
+txtb_spr_w = sprite_get_width(txtb_spr[page]);
+txtb_spr_h = sprite_get_height(txtb_spr[page]);
+
+textbox_upleft_x = textbox_x - (textbox_width / 2);
+textbox_upleft_y = textbox_y - (textbox_height / 2);
 
 global.is_chatting = true;
 
@@ -22,28 +30,20 @@ if setup == false {
 		text_length[p] = string_length(text[p]);
 		
 		// Character on the left
-		text_x_offset[p] = 80;
 		portrait_x_offset[p] = 70;
 		
 		// Character on the middle
 		if speaker_side[p] == 0 {
-			text_x_offset[p] = 8;
 			portrait_x_offset[p] = 64;
 		}
 		
 		// Character on the right
 		if speaker_side[p] == -1 {
-			text_x_offset[p] = 8;
 			portrait_x_offset[p] = 128;
 		}
 		
-		// No character (center textbox)
-		if speaker_sprite[p] == noone {
-			text_x_offset[p] = 22;
-		}
-		
 		// Get X position for textbox
-		text_x_offset[p] = 22;
+		text_x_offset[p] = -14;
 		
 		// NOTE: This is all mega big brain stuff I don't quite understand yet.
 		// Modify with caution!
@@ -80,8 +80,8 @@ if setup == false {
 			var _char_pos = c + 1;
 			
 			// Probably wrong?
-			var _txt_x = textbox_x + text_x_offset[p] + border * 2;
-			var _txt_y = textbox_y + border;
+			var _txt_x = textbox_upleft_x + text_x_offset[p] + border * 2;
+			var _txt_y = textbox_upleft_y + border;
 			
 			// Get current width of the line
 			var _txt_up_to_char = string_copy(text[p], 1, _char_pos);
@@ -206,8 +206,8 @@ if (typing_timer == 0) {
 	}
 
 	// ---------- Draw the window ----------
-	var _txtb_x = textbox_x + 38;
-	var _txtb_y = textbox_y;
+	var _txtb_x = textbox_upleft_x;
+	var _txtb_y = textbox_upleft_y;
 
 	txtb_img += txtb_img_spd;
 
@@ -221,7 +221,7 @@ if (typing_timer == 0) {
 		if draw_char == text_length[page] || (draw_char == "." || draw_char == "?" || draw_char == "!" || draw_char == ",") {
 			image_index = 0;
 		}
-		var _speaker_x = textbox_x + portrait_x_offset[page];
+		var _speaker_x = textbox_upleft_x + portrait_x_offset[page];
 		if speaker_side[page] == -1 {
 			_speaker_x += sprite_width;
 		}
@@ -237,15 +237,13 @@ if (typing_timer == 0) {
 		var _ease_start = _speaker_x + 15;
 		var _distance = _speaker_x - _ease_start
 	
-		draw_sprite_ext(sprite_index, image_index, _ease_start + (_distance * position), textbox_y + 9, 1, 1, 0, c_white, 0 + position);
+		draw_sprite_ext(sprite_index, image_index, _ease_start + (_distance * position), textbox_upleft_y + 9, 1, 1, 0, c_white, 0 + position);
 	
 		old_speaker_name = name_string[page];
 	}
-
-	sprite_set_offset(txtb_spr[page], 0, 0);
 	
 	// Draw the text bubble
-	draw_sprite_ext(txtb_spr[page], txtb_img, _txtb_x, _txtb_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 1);
+	draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x, textbox_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 1);
 
 	// Simple sine-like movement
 	float_number += 4;
@@ -368,7 +366,7 @@ if (typing_timer != 0) {
 
 
 	// ---------- Draw the window ----------
-	var _txtb_x = textbox_x + 38;
+	var _txtb_x = textbox_x;
 	var _txtb_y = textbox_y;
 
 	txtb_img += txtb_img_spd;
@@ -408,14 +406,15 @@ if (typing_timer != 0) {
 
 	// Draw the text bubble
 	
-	sprite_set_offset(txtb_spr[page], txtb_spr_w / 2, txtb_spr_h / 2);
+	show_debug_message("Original horizontal width: " + string(textbox_width));
+	show_debug_message("Original vertical width: " + string(textbox_height));
 	
-	var _stretchh = (ease_out_back(typing_timer, txtb_spr_w, 10, 12));
-	var _stretchv = (ease_out_back(typing_timer, txtb_spr_h, 10, 12));
+	var _stretchh = (ease_out_back(typing_timer, textbox_width, 10, 12));
+	var _stretchv = (ease_out_back(typing_timer, textbox_height, 5, 12));
 	
 	show_debug_message("Horizontal width: " + string(_stretchh));
 	show_debug_message("Vertical width: " + string(_stretchv));
 	
 	//	draw_sprite_ext(txtb_spr[page], txtb_img, _txtb_x, _txtb_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 1);
-	draw_sprite_ext(txtb_spr[page], txtb_img, _txtb_x + txtb_spr_w / 2, _txtb_y + txtb_spr_h / 2, _stretchh / txtb_spr_w, _stretchv / txtb_spr_h, 0, c_white, 1);
+	draw_sprite_ext(txtb_spr[page], txtb_img, _txtb_x, _txtb_y, _stretchh / txtb_spr_w, _stretchv / txtb_spr_h, 0, c_white, 1);
 }
