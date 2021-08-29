@@ -162,7 +162,9 @@ if text_pause_timer <= 0 {
 					audio_play_sound(snd[page], 8, false);
 				} else if (asset_get_index("animalese_" + string_lower(_check_char))) {
 					snd_count = 0;
-					audio_play_sound(asset_get_index("animalese_" + string_lower(_check_char)), 8, false);
+					var _animalese_file = asset_get_index("animalese_" + string_lower(_check_char));
+					audio_sound_pitch(_animalese_file, snd_pitch_multiplier[page]);
+					audio_play_sound(_animalese_file, 8, false);
 				}
 			}
 		}

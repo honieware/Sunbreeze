@@ -29,6 +29,7 @@ function scr_set_defaults_for_text() {
 	background_spr[page_number] = spr_background_player;
 	
 	snd[page_number] = noone;
+	snd_pitch_multiplier[page_number] = 1;
 }
 
 // Text VFX
@@ -79,6 +80,7 @@ function scr_text(_text){
 				name_string[page_number] = "Rover";
 				name_textbox_color[page_number] = $d36356;
 				background_spr[page_number] = spr_background_rover;
+				snd_pitch_multiplier[page_number] = 1.4;
 				// TODO: Implement animalese pitches
 				break;
 			case "Rover-Dream":
