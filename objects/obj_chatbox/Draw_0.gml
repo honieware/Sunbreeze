@@ -3,6 +3,8 @@ accept_key = keyboard_check_pressed(ord("E"));
 textbox_x = camera_get_view_x(view_camera[0]);
 textbox_y = camera_get_view_y(view_camera[0]) + 100;
 
+global.is_chatting = true;
+
 // ---------- Setup ----------
 if setup == false {
 	
@@ -116,10 +118,23 @@ if background_spr[page] {
 	
 	for (var _bg_x = 0; _bg_x < _v_w; _bg_x++) {
 		for (var _bg_y = 0; _bg_y < _v_h; _bg_y++) {
-			draw_sprite_ext(background_spr[page], 0, _bg_x, _bg_y, 1, 1, 0, c_white, _bg_alpha);
+			draw_sprite_ext(background_spr[page], 0, _bg_x - background_offset, _bg_y - background_offset, 1, 1, 0, c_white, _bg_alpha);
 			_bg_y += _bg_h - 1;
 		}
 		_bg_x += _bg_w - 1;
+	}
+	
+	// Assumes background width and height are the same.
+	// Currently can't be arsed to do it "properly".
+	if (background_delay == 0) {
+		background_delay = 5;
+		if (background_offset != _bg_w) {
+			background_offset++;
+		} else {
+			background_offset = 0;
+		}
+	} else {
+		background_delay--;
 	}
 }
 
@@ -173,6 +188,7 @@ if (accept_key) {
 			}
 			
 			// Destroy textbox
+			global.is_chatting = false;
 			instance_destroy();	
 		}
 	} else {

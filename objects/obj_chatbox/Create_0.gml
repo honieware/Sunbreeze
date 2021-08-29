@@ -55,3 +55,6 @@ curve_spd = 0;
 old_speaker_name = noone;
 
 float_number = 0;
+
+background_delay = 5;
+background_offset = 0;
