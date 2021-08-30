@@ -352,7 +352,43 @@ if (typing_timer != 0) {
 	typing_timer--;
 	
 	// Debugging
-	//room_speed = 2;
+	// room_speed = 2;
+
+	// ---------- Drawing the background ----------
+
+	if (typing_timer < 8) {
+		// Fade in
+		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 8))
+		
+		if background_spr[page] {
+			var _bg_w = sprite_get_width(background_spr[page]);
+			var _bg_h = sprite_get_height(background_spr[page]);
+			var _bg_alpha = 0.5;
+			var _v_w = camera_get_view_width(view_camera[0]) + _bg_w;
+			var _v_h = camera_get_view_height(view_camera[0]) + _bg_h;
+	
+			for (var _bg_x = 0; _bg_x < _v_w; _bg_x++) {
+				for (var _bg_y = 0; _bg_y < _v_h; _bg_y++) {
+					draw_sprite_ext(background_spr[page], 0, _bg_x - background_offset, _bg_y - background_offset, 1, 1, 0, c_white, _bg_alpha - _alpha_offset);
+					_bg_y += _bg_h - 1;
+				}
+				_bg_x += _bg_w - 1;
+			}
+	
+			// Assumes background width and height are the same.
+			// Currently can't be arsed to do it "properly".
+			if (background_delay == 0) {
+				background_delay = 5;
+				if (background_offset != _bg_w) {
+					background_offset++;
+				} else {
+					background_offset = 0;
+				}
+			} else {
+				background_delay--;
+			}
+		}
+	}
 
 	// ---------- Draw the portrait ----------
 
@@ -398,5 +434,29 @@ if (typing_timer != 0) {
 		var _stretchv = (ease_out_back(typing_timer, textbox_height, 5, 6));
 	
 		draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x, textbox_y, _stretchh / txtb_spr_w, _stretchv / txtb_spr_h, 0, c_white, 1);
+	}
+	
+	// ---------- Draw the name bubble ----------
+	
+	if (typing_timer < 10) {
+		// Name box
+		nmeb_spr = spr_namebox;
+		nmeb_spr_w = sprite_get_width(nmeb_spr);
+		nmeb_spr_h = sprite_get_height(nmeb_spr);
+		name_spacing = 4;
+		name_str_w = string_width(name_string[page]) + name_spacing * 2
+
+		if name_string[page] != noone {
+			// Fade in
+			var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 7));
+			
+			// Draw the namebox bubble
+			draw_sprite_ext(nmeb_spr, txtb_img, textbox_upleft_x + 40, textbox_upleft_y, name_str_w / nmeb_spr_w, nmeb_height / nmeb_spr_h, 0, name_textbox_color[page], 1 - _alpha_offset);
+
+			// Draw the namebox's text
+			draw_set_halign(fa_center);
+			draw_text_ext_color(textbox_upleft_x + 42, textbox_upleft_y - 6, name_string[page], line_sep, line_width, name_color[page], name_color[page], name_color[page], name_color[page], 1 - _alpha_offset);
+			draw_set_halign(fa_left);
+		}
 	}
 }

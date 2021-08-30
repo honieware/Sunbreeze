@@ -99,6 +99,14 @@ function scr_text(_text){
 				name_textbox_color[page_number] = $0a337a;
 				snd[page_number] = animalese_beep;
 				break;
+			case "Julio Profe":
+				speaker_sprite[page_number] = spr_julio_twt;
+				name_string[page_number] = "Julio Profe";
+				name_textbox_color[page_number] = $a37cf2;
+				name_color[page_number] = $0a0000;
+				background_spr[page_number] = spr_background_platon;
+				snd_pitch_multiplier[page_number] = 0.8;
+				break;
 			case "???":
 				name_string[page_number] = "???";
 				break;

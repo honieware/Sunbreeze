@@ -11,6 +11,7 @@ function scr_game_script(_text_id){
 			break;
 		
 		case "rover_welcome":
+			scr_text("¿Crees que hemos hecho esperar mucho a la gente?", "Julio Profe");
 			scr_text("Hello! The name's Rover. How about you, mrrow?", "Rover");
 				scr_text_color(18, 23, c_teal, c_teal, c_teal, c_teal); scr_text_float(40, 45);
 			scr_text("WHAT THE FUCK IS GOING ON", "Alex", 1);
