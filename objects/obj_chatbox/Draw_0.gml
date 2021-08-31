@@ -13,7 +13,9 @@ textbox_upleft_y = textbox_y - (textbox_height / 2);
 
 global.is_chatting = true;
 
-// ---------- Setup ----------
+// ---- SETUP ----
+// Variables for the following code to use.
+
 if setup == false {
 	
 	setup = true;
@@ -107,38 +109,51 @@ if setup == false {
 	}
 }
 
+// ---- FUNCTIONS ----
+// These are used because transitions require me to draw the same components
+// in slightly different ways (eg. fades, size changes, so on and so forth.)
+// It also makes the code way prettier!
+
+// @param background_sprite
+// @param alpha
+// @param delay
+function drawBackground(_background_sprite, _alpha, _delay) {
+	var _bg_w = sprite_get_width(_background_sprite);
+	var _bg_h = sprite_get_height(_background_sprite);
+	var _v_w = camera_get_view_width(view_camera[0]) + _bg_w;
+	var _v_h = camera_get_view_height(view_camera[0]) + _bg_h;
+	
+	for (var _bg_x = 0; _bg_x < _v_w; _bg_x++) {
+		for (var _bg_y = 0; _bg_y < _v_h; _bg_y++) {
+			draw_sprite_ext(_background_sprite, 0, _bg_x - background_offset, _bg_y - background_offset, 1, 1, 0, c_white, _alpha);
+			_bg_y += _bg_h - 1;
+		}
+		_bg_x += _bg_w - 1;
+	}
+	
+	// Assumes background width and height are the same.
+	// Currently can't be arsed to do it "properly".
+	if (background_delay == 0) {
+		background_delay = _delay;
+		if (background_offset != _bg_w) {
+			background_offset++;
+		} else {
+			background_offset = 0;
+		}
+	} else {
+		background_delay--;
+	}
+}
+
+// ---- ACTING CODE ----
+// Here's where the magic happens.
 
 if (typing_timer == 0) {
 
 	// ---------- Creating the background ----------
 
 	if background_spr[page] {
-		var _bg_w = sprite_get_width(background_spr[page]);
-		var _bg_h = sprite_get_height(background_spr[page]);
-		var _bg_alpha = 0.5;
-		var _v_w = camera_get_view_width(view_camera[0]) + _bg_w;
-		var _v_h = camera_get_view_height(view_camera[0]) + _bg_h;
-	
-		for (var _bg_x = 0; _bg_x < _v_w; _bg_x++) {
-			for (var _bg_y = 0; _bg_y < _v_h; _bg_y++) {
-				draw_sprite_ext(background_spr[page], 0, _bg_x - background_offset, _bg_y - background_offset, 1, 1, 0, c_white, _bg_alpha);
-				_bg_y += _bg_h - 1;
-			}
-			_bg_x += _bg_w - 1;
-		}
-	
-		// Assumes background width and height are the same.
-		// Currently can't be arsed to do it "properly".
-		if (background_delay == 0) {
-			background_delay = 5;
-			if (background_offset != _bg_w) {
-				background_offset++;
-			} else {
-				background_offset = 0;
-			}
-		} else {
-			background_delay--;
-		}
+		drawBackground(background_spr[page], background_alpha, 5)
 	}
 
 	// ---------- Typing the text ----------
@@ -355,39 +370,11 @@ if (typing_timer != 0) {
 	// room_speed = 2;
 
 	// ---------- Drawing the background ----------
+	
 
 	if (typing_timer < 8) {
-		// Fade in
 		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 8))
-		
-		if background_spr[page] {
-			var _bg_w = sprite_get_width(background_spr[page]);
-			var _bg_h = sprite_get_height(background_spr[page]);
-			var _bg_alpha = 0.5;
-			var _v_w = camera_get_view_width(view_camera[0]) + _bg_w;
-			var _v_h = camera_get_view_height(view_camera[0]) + _bg_h;
-	
-			for (var _bg_x = 0; _bg_x < _v_w; _bg_x++) {
-				for (var _bg_y = 0; _bg_y < _v_h; _bg_y++) {
-					draw_sprite_ext(background_spr[page], 0, _bg_x - background_offset, _bg_y - background_offset, 1, 1, 0, c_white, _bg_alpha - _alpha_offset);
-					_bg_y += _bg_h - 1;
-				}
-				_bg_x += _bg_w - 1;
-			}
-	
-			// Assumes background width and height are the same.
-			// Currently can't be arsed to do it "properly".
-			if (background_delay == 0) {
-				background_delay = 5;
-				if (background_offset != _bg_w) {
-					background_offset++;
-				} else {
-					background_offset = 0;
-				}
-			} else {
-				background_delay--;
-			}
-		}
+		drawBackground(background_spr[page], background_alpha - _alpha_offset, 5)
 	}
 
 	// ---------- Draw the portrait ----------
