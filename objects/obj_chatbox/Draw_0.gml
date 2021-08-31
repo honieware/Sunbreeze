@@ -32,7 +32,9 @@ if setup == false {
 		text_length[p] = string_length(text[p]);
 		
 		// Character on the left
-		portrait_x_offset[p] = 50;
+		if speaker_side[p] == 1 {
+			portrait_x_offset[p] = 50;
+		}
 		
 		// Character on the middle
 		if speaker_side[p] == 0 {
@@ -191,7 +193,6 @@ function drawNameBox(_namebox_sprite, _namebox_color, _name, _name_color, _x, _y
 // ---- ACTING CODE ----
 // Here's where the magic happens.
 
-
 // ---------- Creating the background ----------
 
 if background_spr[page] {
@@ -249,6 +250,7 @@ if (accept_key) {
 		
 		// Go to the next page
 		if (page < page_number - 1) {
+			global.last_message_was_option = false;
 			page++;
 			draw_char = 0;
 		} else {
@@ -326,6 +328,8 @@ if draw_char == text_length[page] && page != page_number - 1 {
 
 // ---------- Options ----------
 if draw_char == text_length[page] && page == page_number - 1 {
+
+	global.last_message_was_option = true;
 	
 	// Option selection
 	option_pos += keyboard_check_pressed(ord("S")) - keyboard_check_pressed(ord("W"));

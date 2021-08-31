@@ -61,4 +61,9 @@ background_delay = 5;
 background_offset = 0;
 background_alpha = 0.5;
 
-typing_timer = 24;
+if (global.last_message_was_option == false) {
+	typing_timer = 24;
+} else {
+	last_message_was_option = false;
+	typing_timer = 2; // 0 has some weird issues.
+}
