@@ -191,15 +191,21 @@ function drawNameBox(_namebox_sprite, _namebox_color, _name, _name_color, _x, _y
 // ---- ACTING CODE ----
 // Here's where the magic happens.
 
-if (typing_timer == 0) {
 
-	// ---------- Creating the background ----------
+// ---------- Creating the background ----------
 
-	if background_spr[page] {
+if background_spr[page] {
+	if (typing_timer <= 0 ) {
 		drawBackground(background_spr[page], background_alpha, 5)
+	} else if (typing_timer < 8) {
+		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 8))
+		drawBackground(background_spr[page], background_alpha - _alpha_offset, 5)
 	}
+}
 
-	// ---------- Typing the text ----------
+// ---------- Typing the text ----------
+
+if typing_timer <= 0 {
 	if text_pause_timer <= 0 {
 		if (draw_char < text_length[page]) { // If not the final character
 			draw_char += text_spd;
@@ -233,144 +239,166 @@ if (typing_timer == 0) {
 	} else {
 		text_pause_timer--;	
 	}
+}
 
-	// ---------- Flip through pages ----------
-	if (accept_key) {
+// ---------- Flip through pages ----------
+if (accept_key) {
 	
-		// If the typing is done
-		if (draw_char == text_length[page]) {
+	// If the typing is done
+	if (draw_char == text_length[page]) {
 		
-			// Go to the next page
-			if (page < page_number - 1) {
-				page++;
-				draw_char = 0;
-			} else {
-				// Link text for options
-				if option_number > 0 {
-					create_textbox(option_link_id[option_pos]);	
-				}
-			
-				// Destroy textbox
-				global.is_chatting = false;
-				instance_destroy();	
-			}
+		// Go to the next page
+		if (page < page_number - 1) {
+			page++;
+			draw_char = 0;
 		} else {
-		
-			// Fill out (skip) text
-			draw_char = text_length[page];
-		
+			// Link text for options
+			if option_number > 0 {
+				create_textbox(option_link_id[option_pos]);	
+			}
+			
+			// Destroy textbox
+			global.is_chatting = false;
+			instance_destroy();	
 		}
-	
+	} else {
+		
+		// Fill out (skip) text
+		draw_char = text_length[page];
+		
 	}
+	
+}
 
-	// ---------- Draw the window ----------
-	var _txtb_x = textbox_upleft_x;
-	var _txtb_y = textbox_upleft_y;
+// ---------- Draw the window ----------
+var _txtb_x = textbox_upleft_x;
+var _txtb_y = textbox_upleft_y;
 
-	txtb_img += txtb_img_spd;
+txtb_img += txtb_img_spd;
 
-	txtb_spr_w = sprite_get_width(txtb_spr[page]);
-	txtb_spr_h = sprite_get_height(txtb_spr[page]);
+txtb_spr_w = sprite_get_width(txtb_spr[page]);
+txtb_spr_h = sprite_get_height(txtb_spr[page]);
 
-	// Draw the speaker
-	if speaker_sprite[page] != noone {
-		var _speaker_x = textbox_upleft_x + portrait_x_offset[page];
+// Draw the speaker
+if speaker_sprite[page] != noone {
+	if typing_timer <= 0 {
+		var _speaker_x = textbox_upleft_x + portrait_x_offset[page] - 10;
 		if speaker_side[page] == -1 {
 			_speaker_x += sprite_width;
 		}
 		drawCharacterPortrait(speaker_sprite[page], name_string[page], _speaker_x, textbox_upleft_y + 9, 1)
+	} else {
+		var _speaker_x = textbox_x + portrait_x_offset[page] - 36;
+		var _x_offset = (ease_in_sine(typing_timer, _speaker_x, 15, 12));
+		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 12));
+		
+		drawCharacterPortrait(speaker_sprite[page], name_string[page], _x_offset, textbox_upleft_y + 9, 1 - _alpha_offset)
 	}
-	
+}
+
+if (typing_timer == 0) {
 	// Draw the text bubble
 	draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x, textbox_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 1);
+} else if (typing_timer >= 6) {
+	// Part 1: Small to big sprite
+	var _t_timer = typing_timer - 6
+	
+	var _stretchh = (ease_in_sine(_t_timer, textbox_width + 10, -20, 6));
+	var _stretchv = (ease_in_sine(_t_timer, textbox_height + 5, -10, 6));
+	
+	draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x, textbox_y, _stretchh / txtb_spr_w, _stretchv / txtb_spr_h, 0, c_white, 1);
+} else if (typing_timer < 6) {
+	// Part 2: Overshooting the target
+	var _stretchh = (ease_out_back(typing_timer, textbox_width, 10, 6));
+	var _stretchv = (ease_out_back(typing_timer, textbox_height, 5, 6));
+	
+	draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x, textbox_y, _stretchh / txtb_spr_w, _stretchv / txtb_spr_h, 0, c_white, 1);
+}
 
-	// Simple sine-like movement
-	float_number += 4;
-	var _float_arrow = dsin(float_number);
+// Simple sine-like movement
+float_number += 4;
+var _float_arrow = dsin(float_number);
 
-	// Draw the "next dialogue" arrow
-	if draw_char == text_length[page] && page != page_number - 1 {
-		draw_sprite(spr_continue_arrow, 0, _txtb_x + (textbox_width / 2), (textbox_height + _txtb_y) - 5 + _float_arrow);
-	}
+// Draw the "next dialogue" arrow
+if draw_char == text_length[page] && page != page_number - 1 {
+	draw_sprite(spr_continue_arrow, 0, _txtb_x + (textbox_width / 2), (textbox_height + _txtb_y) - 5 + _float_arrow);
+}
 
-	// ---------- Options ----------
-	if draw_char == text_length[page] && page == page_number - 1 {
+// ---------- Options ----------
+if draw_char == text_length[page] && page == page_number - 1 {
 	
-		// Option selection
-		option_pos += keyboard_check_pressed(ord("S")) - keyboard_check_pressed(ord("W"));
-		option_pos = clamp(option_pos, 0, option_number - 1);
+	// Option selection
+	option_pos += keyboard_check_pressed(ord("S")) - keyboard_check_pressed(ord("W"));
+	option_pos = clamp(option_pos, 0, option_number - 1);
 	
-		// Draw the options
-		var _op_space = 15;
-		var _op_bord = 5;
-		var _op_box_bord = 10;
+	// Draw the options
+	var _op_space = 15;
+	var _op_bord = 5;
+	var _op_box_bord = 10;
 	
-		var _opt_spr = spr_optionbox;
-		var _opt_width = 150;
-		var _opt_height = 40;
+	var _opt_spr = spr_optionbox;
+	var _opt_width = 150;
+	var _opt_height = 40;
 	
-		// Draw the option bubble
-		var _longest_op_width = 0;
-		var _longest_op_height = 0;
+	// Draw the option bubble
+	var _longest_op_width = 0;
+	var _longest_op_height = 0;
 	
-		// Get the longest element in an array
-		for (var op2 = 0; op2 < array_length(option); op2++) {
-			if (string_width(option[op2]) > _longest_op_width) {
-				_longest_op_width = string_width(option[op2]);
-			}
-			if (string_height(option[op2]) > _longest_op_height) {
-				_longest_op_height = string_height(option[op2]);
-			}
+	// Get the longest element in an array
+	for (var op2 = 0; op2 < array_length(option); op2++) {
+		if (string_width(option[op2]) > _longest_op_width) {
+			_longest_op_width = string_width(option[op2]);
 		}
-
-		var _opt_width = _longest_op_width + _op_box_bord*2;
-		var _opt_height = array_length(option) * _longest_op_height + _op_bord*2 + _op_box_bord*2;
-		
-		var _opt_spr_w = sprite_get_width(_opt_spr);
-		var _opt_spr_h = sprite_get_height(_opt_spr);
-	
-		if option_number > 0 {
-			draw_sprite_ext(_opt_spr, txtb_img, option_x, _txtb_y + 16, _opt_width / _opt_spr_w, _opt_height / _opt_spr_h, 0, c_white, 1)
-		}
-
-		for (var op = 0; op < option_number; op++) {
-		
-			var _o_w = string_width(option[op]) + _op_bord*2;
-			var _opt_spr_w = sprite_get_width(spr_selectbox);
-		
-			// Draw the selected box, arrow
-			if option_pos == op {
-				draw_sprite_ext(spr_selectbox, txtb_img, (option_x - _opt_width) + _op_box_bord - 5, _txtb_y - _op_space * option_number + _op_space * op + 5, _o_w / _opt_spr_w, 1, 0, c_white, 1);
-				draw_sprite(spr_chatbox_point, 0, (option_x - _opt_width - _float_arrow) - 16, _txtb_y - _op_space * option_number + _op_space * op)	
-			}	
-		
-			// Draw the option's text
-			draw_text((option_x - _opt_width) + _op_box_bord,  _txtb_y - _op_space * option_number + _op_space * op + 2, option[op]);	
+		if (string_height(option[op2]) > _longest_op_height) {
+			_longest_op_height = string_height(option[op2]);
 		}
 	}
 
-	// Name box
-	nmeb_spr = spr_namebox;
-	nmeb_spr_w = sprite_get_width(nmeb_spr);
-	nmeb_spr_h = sprite_get_height(nmeb_spr);
-	name_spacing = 4;
-	name_str_w = string_width(name_string[page]) + name_spacing * 2
-
-	if name_string[page] != noone {
-		// Draw the namebox bubble
-		draw_sprite_ext(nmeb_spr, txtb_img, _txtb_x + 40, _txtb_y, name_str_w / nmeb_spr_w, nmeb_height / nmeb_spr_h, 0, name_textbox_color[page], 1);
-
-		// Draw the namebox's text
-		draw_set_halign(fa_center);
-		draw_set_color(name_color[page]);
-		draw_text_ext(_txtb_x + 42, _txtb_y - 6, name_string[page], line_sep, line_width);
-		draw_set_halign(fa_left);
-		draw_set_color(text_def_color);
+	var _opt_width = _longest_op_width + _op_box_bord*2;
+	var _opt_height = array_length(option) * _longest_op_height + _op_bord*2 + _op_box_bord*2;
+		
+	var _opt_spr_w = sprite_get_width(_opt_spr);
+	var _opt_spr_h = sprite_get_height(_opt_spr);
+	
+	if option_number > 0 {
+		draw_sprite_ext(_opt_spr, txtb_img, option_x, _txtb_y + 16, _opt_width / _opt_spr_w, _opt_height / _opt_spr_h, 0, c_white, 1)
 	}
 
-	// Draw the actual text
-	// String "arrays" start at 1. Stupid, I know
+	for (var op = 0; op < option_number; op++) {
+		
+		var _o_w = string_width(option[op]) + _op_bord*2;
+		var _opt_spr_w = sprite_get_width(spr_selectbox);
+		
+		// Draw the selected box, arrow
+		if option_pos == op {
+			draw_sprite_ext(spr_selectbox, txtb_img, (option_x - _opt_width) + _op_box_bord - 5, _txtb_y - _op_space * option_number + _op_space * op + 5, _o_w / _opt_spr_w, 1, 0, c_white, 1);
+			draw_sprite(spr_chatbox_point, 0, (option_x - _opt_width - _float_arrow) - 16, _txtb_y - _op_space * option_number + _op_space * op)	
+		}	
+		
+		// Draw the option's text
+		draw_text((option_x - _opt_width) + _op_box_bord,  _txtb_y - _op_space * option_number + _op_space * op + 2, option[op]);	
+	}
+}
 
+// Name box
+name_str_w = string_width(name_string[page]) + name_spacing * 2
+nmeb_spr_w = sprite_get_width(name_textbox_color[page]);
+nmeb_spr_h = sprite_get_height(name_textbox_color[page]);
+
+if name_string[page] != noone {
+	if (typing_timer <= 0) {
+		drawNameBox(spr_namebox, name_textbox_color[page], name_string[page], name_color[page], textbox_upleft_x + 40, textbox_upleft_y, name_str_w / nmeb_spr_w, nmeb_height / nmeb_spr_h, 1)
+	} else if (typing_timer < 10) {
+		// Fade in
+		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 7));
+		drawNameBox(spr_namebox, name_textbox_color[page], name_string[page], name_color[page], textbox_upleft_x + 40, textbox_upleft_y, name_str_w / nmeb_spr_w, nmeb_height / nmeb_spr_h, 1 - _alpha_offset)
+	}
+}
+
+// Draw the actual text
+// String "arrays" start at 1. Stupid, I know
+
+if (typing_timer <= 0) {
 	for (var c = 0; c < draw_char; c++) {
 	
 		// -------- Special stuff! --------
@@ -399,80 +427,12 @@ if (typing_timer == 0) {
 	}
 }
 
-// Decrease waiting timer
 if (typing_timer != 0) {
-	
+	//room_speed = 3;
 	typing_timer--;
-	
-	// Debugging
-	room_speed = 2;
-
-	// ---------- Drawing the background ----------
-	
-
-	if (typing_timer < 8) {
-		// and if background_spr[page] exists!
-		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 8))
-		drawBackground(background_spr[page], background_alpha - _alpha_offset, 5)
-	}
-
-	// ---------- Draw the portrait ----------
-
-	if speaker_sprite[page] != noone {
-		
-		// No bloody idea why 26 is the magic number.
-		var _speaker_x = textbox_x + portrait_x_offset[page] - 26;
-		var _x_offset = (ease_in_sine(typing_timer, _speaker_x, 15, 12));
-		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 12));
-		
-		drawCharacterPortrait(speaker_sprite[page], name_string[page], _x_offset, textbox_upleft_y + 9, 1)
-		
-	}
-
-	// ---------- Draw the window ----------
-	
-	// Part 1: Small to big sprite
-	
-	if (typing_timer >= 6) {
-		var _t_timer = typing_timer - 6
-		
-		txtb_img += txtb_img_spd;
-
-		txtb_spr_w = sprite_get_width(txtb_spr[page]);
-		txtb_spr_h = sprite_get_height(txtb_spr[page]);
-	
-		var _stretchh = (ease_in_sine(_t_timer, textbox_width + 10, -20, 6));
-		var _stretchv = (ease_in_sine(_t_timer, textbox_height + 5, -10, 6));
-	
-		draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x, textbox_y, _stretchh / txtb_spr_w, _stretchv / txtb_spr_h, 0, c_white, 1);
-	}
-	
-	// Part 2: Overshooting the target
-	
-	if (typing_timer < 6) {
-		txtb_img += txtb_img_spd;
-
-		txtb_spr_w = sprite_get_width(txtb_spr[page]);
-		txtb_spr_h = sprite_get_height(txtb_spr[page]);
-	
-		var _stretchh = (ease_out_back(typing_timer, textbox_width, 10, 6));
-		var _stretchv = (ease_out_back(typing_timer, textbox_height, 5, 6));
-	
-		draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x, textbox_y, _stretchh / txtb_spr_w, _stretchv / txtb_spr_h, 0, c_white, 1);
-	}
-	
-	// ---------- Draw the name bubble ----------
-	
-	if (typing_timer < 10) {
-		name_str_w = string_width(name_string[page]) + name_spacing * 2
-		nmeb_spr_w = sprite_get_width(name_textbox_color[page]);
-		nmeb_spr_h = sprite_get_height(name_textbox_color[page]);
-	
-		if name_string[page] != noone {
-			// Fade in
-			var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 7));
-			
-			drawNameBox(spr_namebox, name_textbox_color[page], name_string[page], name_color[page], textbox_upleft_x + 40, textbox_upleft_y, name_str_w / nmeb_spr_w, nmeb_height / nmeb_spr_h, 1 - _alpha_offset)
-		}
-	}
 }
+/*
+else {
+	room_speed = 60;
+}
+*/
