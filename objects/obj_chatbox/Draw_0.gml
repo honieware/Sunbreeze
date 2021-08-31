@@ -195,17 +195,17 @@ function drawNameBox(_namebox_sprite, _namebox_color, _name, _name_color, _x, _y
 // ---------- Creating the background ----------
 
 if background_spr[page] {
-	if (typing_timer <= 0 ) {
+	if (typing_timer <= 12 ) {
 		drawBackground(background_spr[page], background_alpha, 5)
-	} else if (typing_timer < 8) {
-		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 8))
+	} else if (typing_timer < 20) {
+		var _alpha_offset = (ease_in_sine(typing_timer - 14, 0, 1, 8))
 		drawBackground(background_spr[page], background_alpha - _alpha_offset, 5)
 	}
 }
 
 // ---------- Typing the text ----------
 
-if typing_timer <= 0 {
+if typing_timer <= 12 {
 	if text_pause_timer <= 0 {
 		if (draw_char < text_length[page]) { // If not the final character
 			draw_char += text_spd;
@@ -289,28 +289,28 @@ if speaker_sprite[page] != noone {
 		drawCharacterPortrait(speaker_sprite[page], name_string[page], _speaker_x, textbox_upleft_y + 9, 1)
 	} else {
 		var _speaker_x = textbox_x + portrait_x_offset[page] - 36;
-		var _x_offset = (ease_in_sine(typing_timer, _speaker_x, 15, 12));
-		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 12));
+		var _x_offset = (ease_in_sine(typing_timer, _speaker_x, 15, 24));
+		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 24));
 		
 		drawCharacterPortrait(speaker_sprite[page], name_string[page], _x_offset, textbox_upleft_y + 9, 1 - _alpha_offset)
 	}
 }
 
-if (typing_timer == 0) {
+if (typing_timer <= 12) {
 	// Draw the text bubble
 	draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x, textbox_y, textbox_width / txtb_spr_w, textbox_height / txtb_spr_h, 0, c_white, 1);
-} else if (typing_timer >= 6) {
+} else if (typing_timer >= 18) {
 	// Part 1: Small to big sprite
-	var _t_timer = typing_timer - 6
+	var _t_timer = typing_timer - 18
 	
 	var _stretchh = (ease_in_sine(_t_timer, textbox_width + 10, -20, 6));
 	var _stretchv = (ease_in_sine(_t_timer, textbox_height + 5, -10, 6));
 	
 	draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x, textbox_y, _stretchh / txtb_spr_w, _stretchv / txtb_spr_h, 0, c_white, 1);
-} else if (typing_timer < 6) {
+} else if (typing_timer < 18) {
 	// Part 2: Overshooting the target
-	var _stretchh = (ease_out_back(typing_timer, textbox_width, 10, 6));
-	var _stretchv = (ease_out_back(typing_timer, textbox_height, 5, 6));
+	var _stretchh = (ease_out_back(typing_timer - 12, textbox_width, 10, 6));
+	var _stretchv = (ease_out_back(typing_timer - 12, textbox_height, 5, 6));
 	
 	draw_sprite_ext(txtb_spr[page], txtb_img, textbox_x, textbox_y, _stretchh / txtb_spr_w, _stretchv / txtb_spr_h, 0, c_white, 1);
 }
@@ -386,11 +386,11 @@ nmeb_spr_w = sprite_get_width(name_textbox_color[page]);
 nmeb_spr_h = sprite_get_height(name_textbox_color[page]);
 
 if name_string[page] != noone {
-	if (typing_timer <= 0) {
+	if (typing_timer <= 17) {
 		drawNameBox(spr_namebox, name_textbox_color[page], name_string[page], name_color[page], textbox_upleft_x + 40, textbox_upleft_y, name_str_w / nmeb_spr_w, nmeb_height / nmeb_spr_h, 1)
-	} else if (typing_timer < 10) {
+	} else if (typing_timer < 22) {
 		// Fade in
-		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 7));
+		var _alpha_offset = (ease_in_sine(typing_timer - 17, 0, 1, 7));
 		drawNameBox(spr_namebox, name_textbox_color[page], name_string[page], name_color[page], textbox_upleft_x + 40, textbox_upleft_y, name_str_w / nmeb_spr_w, nmeb_height / nmeb_spr_h, 1 - _alpha_offset)
 	}
 }
@@ -398,7 +398,7 @@ if name_string[page] != noone {
 // Draw the actual text
 // String "arrays" start at 1. Stupid, I know
 
-if (typing_timer <= 0) {
+if (typing_timer <= 12) {
 	for (var c = 0; c < draw_char; c++) {
 	
 		// -------- Special stuff! --------

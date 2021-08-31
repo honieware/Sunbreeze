@@ -61,4 +61,4 @@ background_delay = 5;
 background_offset = 0;
 background_alpha = 0.5;
 
-typing_timer = 12;
+typing_timer = 24;
