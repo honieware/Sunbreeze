@@ -36,6 +36,7 @@ nmeb_height = 18;
 name_string = "";
 name_color = $ffffff;
 name_textbox_color = $000000;
+name_spacing = 4;
 
 setup = false;
 

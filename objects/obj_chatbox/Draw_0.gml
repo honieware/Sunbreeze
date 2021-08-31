@@ -114,9 +114,9 @@ if setup == false {
 // in slightly different ways (eg. fades, size changes, so on and so forth.)
 // It also makes the code way prettier!
 
-// @param background_sprite
-// @param alpha
-// @param delay
+/// @param background_sprite
+/// @param alpha
+/// @param delay
 function drawBackground(_background_sprite, _alpha, _delay) {
 	var _bg_w = sprite_get_width(_background_sprite);
 	var _bg_h = sprite_get_height(_background_sprite);
@@ -145,6 +145,49 @@ function drawBackground(_background_sprite, _alpha, _delay) {
 	}
 }
 
+/// @param character_sprite
+/// @param name
+/// @param x
+/// @param y
+/// @param alpha
+function drawCharacterPortrait(_character_sprite, _name, _x, _y, _alpha) {
+	sprite_index = _character_sprite;
+	
+	// When they're done talking, reset animation to first frame
+	if draw_char == text_length[page] || (draw_char == "." || draw_char == "?" || draw_char == "!" || draw_char == ",") {
+		image_index = 0;
+	}
+	
+	draw_sprite_ext(sprite_index, image_index, _x, _y, 1, 1, 0, c_white, _alpha);
+	
+	// Set this for the next frame.
+	old_speaker_name = _name;
+}
+
+/// @param namebox_sprite
+/// @param namebox_color
+/// @param name
+/// @param name_color
+/// @param x
+/// @param y
+/// @param box_width
+/// @param box_height
+/// @param alpha
+function drawNameBox(_namebox_sprite, _namebox_color, _name, _name_color, _x, _y, _box_width, _box_height, _alpha) {
+	var _nmeb_spr_w = sprite_get_width(_namebox_sprite);
+	var _nmeb_spr_h = sprite_get_height(_namebox_sprite);
+	var _name_str_w = string_width(_name) + name_spacing * 2
+
+	if _name != noone {
+		// Draw the namebox bubble
+		draw_sprite_ext(_namebox_sprite, txtb_img, _x, _y, _name_str_w / _nmeb_spr_w, nmeb_height / _nmeb_spr_h, 0, _namebox_color, _alpha);
+
+		// Draw the namebox's text
+		draw_set_halign(fa_center);
+		draw_text_ext_color(textbox_upleft_x + 42, textbox_upleft_y - 6, _name, line_sep, line_width, _name_color, _name_color, _name_color, _name_color, _alpha);
+		draw_set_halign(fa_left);
+	}	
+}
 // ---- ACTING CODE ----
 // Here's where the magic happens.
 
@@ -231,16 +274,11 @@ if (typing_timer == 0) {
 
 	// Draw the speaker
 	if speaker_sprite[page] != noone {
-		sprite_index = speaker_sprite[page];
-		// When they're done talking, reset animation to first frame
-		if draw_char == text_length[page] || (draw_char == "." || draw_char == "?" || draw_char == "!" || draw_char == ",") {
-			image_index = 0;
-		}
 		var _speaker_x = textbox_upleft_x + portrait_x_offset[page];
 		if speaker_side[page] == -1 {
 			_speaker_x += sprite_width;
 		}
-		draw_sprite_ext(sprite_index, image_index, _speaker_x, textbox_upleft_y + 9, 1, 1, 0, c_white, 1);
+		drawCharacterPortrait(speaker_sprite[page], name_string[page], _speaker_x, textbox_upleft_y + 9, 1)
 	}
 	
 	// Draw the text bubble
@@ -367,12 +405,13 @@ if (typing_timer != 0) {
 	typing_timer--;
 	
 	// Debugging
-	// room_speed = 2;
+	room_speed = 2;
 
 	// ---------- Drawing the background ----------
 	
 
 	if (typing_timer < 8) {
+		// and if background_spr[page] exists!
 		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 8))
 		drawBackground(background_spr[page], background_alpha - _alpha_offset, 5)
 	}
@@ -380,15 +419,14 @@ if (typing_timer != 0) {
 	// ---------- Draw the portrait ----------
 
 	if speaker_sprite[page] != noone {
-		sprite_index = speaker_sprite[page];
+		
 		// No bloody idea why 26 is the magic number.
 		var _speaker_x = textbox_x + portrait_x_offset[page] - 26;
 		var _x_offset = (ease_in_sine(typing_timer, _speaker_x, 15, 12));
 		var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 12));
 		
-		draw_sprite_ext(sprite_index, 0, _x_offset, textbox_upleft_y + 9, 1, 1, 0, c_white, 1 - _alpha_offset);
-	
-		old_speaker_name = name_string[page];
+		drawCharacterPortrait(speaker_sprite[page], name_string[page], _x_offset, textbox_upleft_y + 9, 1)
+		
 	}
 
 	// ---------- Draw the window ----------
@@ -426,24 +464,15 @@ if (typing_timer != 0) {
 	// ---------- Draw the name bubble ----------
 	
 	if (typing_timer < 10) {
-		// Name box
-		nmeb_spr = spr_namebox;
-		nmeb_spr_w = sprite_get_width(nmeb_spr);
-		nmeb_spr_h = sprite_get_height(nmeb_spr);
-		name_spacing = 4;
 		name_str_w = string_width(name_string[page]) + name_spacing * 2
-
+		nmeb_spr_w = sprite_get_width(name_textbox_color[page]);
+		nmeb_spr_h = sprite_get_height(name_textbox_color[page]);
+	
 		if name_string[page] != noone {
 			// Fade in
 			var _alpha_offset = (ease_in_sine(typing_timer, 0, 1, 7));
 			
-			// Draw the namebox bubble
-			draw_sprite_ext(nmeb_spr, txtb_img, textbox_upleft_x + 40, textbox_upleft_y, name_str_w / nmeb_spr_w, nmeb_height / nmeb_spr_h, 0, name_textbox_color[page], 1 - _alpha_offset);
-
-			// Draw the namebox's text
-			draw_set_halign(fa_center);
-			draw_text_ext_color(textbox_upleft_x + 42, textbox_upleft_y - 6, name_string[page], line_sep, line_width, name_color[page], name_color[page], name_color[page], name_color[page], 1 - _alpha_offset);
-			draw_set_halign(fa_left);
+			drawNameBox(spr_namebox, name_textbox_color[page], name_string[page], name_color[page], textbox_upleft_x + 40, textbox_upleft_y, name_str_w / nmeb_spr_w, nmeb_height / nmeb_spr_h, 1 - _alpha_offset)
 		}
 	}
 }
