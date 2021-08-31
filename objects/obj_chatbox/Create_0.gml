@@ -61,6 +61,9 @@ background_delay = 5;
 background_offset = 0;
 background_alpha = 0.5;
 
+fade_background_timer = 0;
+fade_one_time_check = true;
+
 if (global.last_message_was_option == false) {
 	typing_timer = 24;
 } else {

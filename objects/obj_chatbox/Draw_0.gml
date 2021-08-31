@@ -190,15 +190,40 @@ function drawNameBox(_namebox_sprite, _namebox_color, _name, _name_color, _x, _y
 		draw_set_halign(fa_left);
 	}	
 }
+
 // ---- ACTING CODE ----
 // Here's where the magic happens.
 
 // ---------- Creating the background ----------
 
 if background_spr[page] {
-	if (typing_timer <= 12 ) {
+	// Determine whether to fade from one background to another or not
+	if (page != 0) {
+		if (background_spr[page] != background_spr[page - 1]) {
+			if fade_background_timer > 0 {
+				fade_background_timer--;
+			} else {
+				if (fade_one_time_check == true) {
+					fade_background_timer = 16;
+					fade_one_time_check = false;
+				}
+			}
+		}
+	}
+	
+	if (fade_background_timer > 9 && fade_background_timer != 0) {
+		// Fade out old background
+		var _alpha_offset = (ease_in_sine(fade_background_timer - 8, background_alpha, -1, 8))
+		drawBackground(background_spr[page - 1],_alpha_offset * -1, 5)
+	} else if (fade_background_timer != 0) {
+		// Fade in new background
+		var _alpha_offset = (ease_in_sine(fade_background_timer - 9, 0, background_alpha, 9))
+		drawBackground(background_spr[page], _alpha_offset, 5)
+	} else if (typing_timer <= 12 ) {
+		// Draw the background as usual
 		drawBackground(background_spr[page], background_alpha, 5)
 	} else if (typing_timer < 20) {
+		// Ease in the background
 		var _alpha_offset = (ease_in_sine(typing_timer - 14, 0, 1, 8))
 		drawBackground(background_spr[page], background_alpha - _alpha_offset, 5)
 	}
@@ -253,6 +278,7 @@ if (accept_key) {
 			global.last_message_was_option = false;
 			page++;
 			draw_char = 0;
+			fade_one_time_check = true;
 		} else {
 			// Link text for options
 			if option_number > 0 {
