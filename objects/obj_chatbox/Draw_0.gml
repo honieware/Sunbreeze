@@ -1,7 +1,7 @@
 accept_key = keyboard_check_pressed(ord("E"));
 
-textbox_x = camera_get_view_width(view_camera[0]) / 2;
-textbox_y = camera_get_view_height(view_camera[0]) - 48;
+textbox_x = camera_get_view_x(view_camera[0]) + (camera_get_view_width(view_camera[0]) / 2);
+textbox_y = camera_get_view_y(view_camera[0]) + (camera_get_view_height(view_camera[0]) - 48);
 
 // Legacy for old code
 
@@ -124,9 +124,13 @@ function drawBackground(_background_sprite, _alpha, _delay) {
 	var _bg_h = sprite_get_height(_background_sprite);
 	var _v_w = camera_get_view_width(view_camera[0]) + _bg_w;
 	var _v_h = camera_get_view_height(view_camera[0]) + _bg_h;
+	var _v_x = camera_get_view_x(view_camera[0])
+	var _v_y = camera_get_view_y(view_camera[0])
+	show_debug_message(_v_x)
+	show_debug_message(_v_y)
 	
-	for (var _bg_x = 0; _bg_x < _v_w; _bg_x++) {
-		for (var _bg_y = 0; _bg_y < _v_h; _bg_y++) {
+	for (var _bg_x = _v_x; _bg_x < _v_w + _v_x; _bg_x++) {
+		for (var _bg_y = _v_y; _bg_y < _v_h + _v_y; _bg_y++) {
 			draw_sprite_ext(_background_sprite, 0, _bg_x - background_offset, _bg_y - background_offset, 1, 1, 0, c_white, _alpha);
 			_bg_y += _bg_h - 1;
 		}

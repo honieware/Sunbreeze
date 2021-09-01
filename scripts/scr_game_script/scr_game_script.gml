@@ -10,6 +10,12 @@ function scr_game_script(_text_id){
 			scr_text("war crimes. :)", "Rover-Dream");
 			break;
 		
+		case "rover_teaser":
+			scr_text("And you said you were going to Sunbreeze Island, right?", "Rover");
+			scr_text_color(31, 46, c_teal, c_teal, c_teal, c_teal); scr_text_float(31, 46);
+			scr_text("And you said you were going to Sunbreeze Island, right?", "Rover");
+			break;
+		
 		case "rover_welcome":
 			scr_text("¿Crees que hemos hecho esperar mucho a la gente?", "Julio Profe");
 			scr_text("Hello! The name's Rover. How about you, mrrow?", "Rover");
