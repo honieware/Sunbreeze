@@ -16,7 +16,7 @@
     {"id":{"name":"obj_carpet_worn","path":"objects/obj_carpet_worn/obj_carpet_worn.yy",},"order":1,},
     {"id":{"name":"spr_main_font","path":"sprites/spr_main_font/spr_main_font.yy",},"order":0,},
     {"id":{"name":"ease_out_expo","path":"scripts/ease_out_expo/ease_out_expo.yy",},"order":26,},
-    {"id":{"name":"par_depthobject","path":"objects/par_depthobject/par_depthobject.yy",},"order":1,},
+    {"id":{"name":"par_entity","path":"objects/par_entity/par_entity.yy",},"order":1,},
     {"id":{"name":"obj_planechair_back","path":"objects/obj_planechair_back/obj_planechair_back.yy",},"order":6,},
     {"id":{"name":"ease_in_quad","path":"scripts/ease_in_quad/ease_in_quad.yy",},"order":6,},
     {"id":{"name":"animalese_r","path":"sounds/animalese_r/animalese_r.yy",},"order":17,},

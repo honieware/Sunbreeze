@@ -215,6 +215,8 @@ if background_spr[page] {
 		}
 	}
 	
+	// TODO: Woah man, you know what you could use here?
+	// A switch statement. Ever heard of that? Fuckin' Yanderedev lookin' ass
 	if (fade_background_timer > 9 && fade_background_timer != 0) {
 		// Fade out old background
 		var _alpha_offset = (ease_in_sine(fade_background_timer - 8, background_alpha, -1, 8))

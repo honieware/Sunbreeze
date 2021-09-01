@@ -2,11 +2,11 @@
 
 // Resize grid
 var dgrid = ds_depthgrid;
-var inst_num = instance_number(par_depthobject)
+var inst_num = instance_number(par_entity)
 ds_grid_resize(dgrid, 2, inst_num)
 
-// Every instance of par_depthobject (its children) will run the code below
-var yy = 0; with (par_depthobject) {
+// Every instance of par_entity (its children) will run the code below
+var yy = 0; with (par_entity) {
 	dgrid[# 0, yy] = id;
 	dgrid[# 1, yy] = y;
 	yy++;
